@@ -463,7 +463,15 @@ namespace DnLite
             }
             else
             {
-                MessageBox.Show("Failed to remove token.", "Remove Token", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Failed to remove token.", "Remove Token", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ClearPaletteButton_Click(object sender, EventArgs e)
+        {
+            while (AdminPalettePanel.Controls.Count > 0)
+            {
+                AdminPalettePanel.Controls[0].Dispose();
             }
         }
     }

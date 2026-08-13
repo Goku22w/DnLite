@@ -82,6 +82,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.SelectedTokenRemoveButton = new System.Windows.Forms.Button();
             this.AdminPalettePanel = new System.Windows.Forms.Panel();
+            this.ClearPaletteButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -601,14 +602,25 @@
             this.AdminPalettePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.AdminPalettePanel.Location = new System.Drawing.Point(681, 12);
             this.AdminPalettePanel.Name = "AdminPalettePanel";
-            this.AdminPalettePanel.Size = new System.Drawing.Size(168, 379);
+            this.AdminPalettePanel.Size = new System.Drawing.Size(168, 349);
             this.AdminPalettePanel.TabIndex = 52;
+            // 
+            // ClearPaletteButton
+            // 
+            this.ClearPaletteButton.Location = new System.Drawing.Point(681, 372);
+            this.ClearPaletteButton.Name = "ClearPaletteButton";
+            this.ClearPaletteButton.Size = new System.Drawing.Size(168, 23);
+            this.ClearPaletteButton.TabIndex = 53;
+            this.ClearPaletteButton.Text = "Clear Palette of Tokens";
+            this.ClearPaletteButton.UseVisualStyleBackColor = true;
+            this.ClearPaletteButton.Click += new System.EventHandler(this.ClearPaletteButton_Click);
             // 
             // DnLiteAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 407);
+            this.Controls.Add(this.ClearPaletteButton);
             this.Controls.Add(this.SelectedTokenRemoveButton);
             this.Controls.Add(this.AdminPalettePanel);
             this.Controls.Add(this.label18);
@@ -710,5 +722,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button SelectedTokenRemoveButton;
         private System.Windows.Forms.Panel AdminPalettePanel;
+        private System.Windows.Forms.Button ClearPaletteButton;
     }
 }
