@@ -67,6 +67,8 @@
             this.Controls.Add(this.GridEmptyButton);
             this.Controls.Add(this.InitiativeList);
             this.Controls.Add(this.gridPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "DnLiteDisplay";
             this.Text = "DnLite Viewer Table";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DnLiteDisplay_FormClosed);

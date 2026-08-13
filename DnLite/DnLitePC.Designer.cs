@@ -115,6 +115,7 @@
             this.ClearCharacterButton.TabIndex = 7;
             this.ClearCharacterButton.Text = "Clear Data";
             this.ClearCharacterButton.UseVisualStyleBackColor = true;
+            this.ClearCharacterButton.Click += new System.EventHandler(this.ClearCharacterButton_Click);
             // 
             // CharacterTokenLetter
             // 
@@ -169,6 +170,8 @@
             this.Controls.Add(this.NameTextLabel);
             this.Controls.Add(this.CharacterClassCombo);
             this.Controls.Add(this.CharacterNameText);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "DnLitePC";
             this.Text = "DnLite Player Creator";
             this.Load += new System.EventHandler(this.DnLitePC_Load);

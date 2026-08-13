@@ -474,5 +474,26 @@ namespace DnLite
                 AdminPalettePanel.Controls[0].Dispose();
             }
         }
+
+        private void ClearCreatureData_Click(object sender, EventArgs e)
+        {
+            CreatureNameText.Text = string.Empty;
+            CreatureHPNumeric.Value = CreatureHPNumeric.Minimum;
+            CreatureACNumeric.Value = CreatureACNumeric.Minimum;
+            CreatureTokenLetter.Text = string.Empty;
+            CreatureDescRichText.Text = string.Empty;
+            CreatureHostileCheck.Checked = false;
+            CreatureSizeCheck.Checked = false;
+
+        }
+
+        private void ClearDecoData_Click(object sender, EventArgs e)
+        {
+            DecoNameText.Text = string.Empty;
+            DecoDescRichText.Text = string.Empty;
+            DecoTallNumeric.Value = DecoTallNumeric.Minimum;
+            DecoWideNumeric.Value = DecoWideNumeric.Minimum;
+            DecoImageFileLocation.Text = string.Empty;
+        }
     }
 }

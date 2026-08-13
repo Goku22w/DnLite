@@ -143,5 +143,13 @@ namespace DnLite
             var td = new TokenData(CharacterNameText.Text ?? string.Empty, 3, 3, 0);
             parentDisplay.AddPaletteTokenToAdmin(tokenChar, tokenColor, td);
         }
+
+        private void ClearCharacterButton_Click(object sender, EventArgs e)
+        {
+            CharacterNameText.Text = string.Empty;
+            CharacterClassCombo.Text = "--Pick a Class--";
+            CharacterDescRichText.Text = string.Empty;
+            CharacterTokenLetter.Text = string.Empty;
+        }
     }
 }

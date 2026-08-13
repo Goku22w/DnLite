@@ -240,6 +240,7 @@
             this.ClearCreatureData.TabIndex = 15;
             this.ClearCreatureData.Text = "Clear Data";
             this.ClearCreatureData.UseVisualStyleBackColor = true;
+            this.ClearCreatureData.Click += new System.EventHandler(this.ClearCreatureData_Click);
             // 
             // CreateCreatureButton
             // 
@@ -380,6 +381,7 @@
             this.ClearDecoData.TabIndex = 25;
             this.ClearDecoData.Text = "Clear Data";
             this.ClearDecoData.UseVisualStyleBackColor = true;
+            this.ClearDecoData.Click += new System.EventHandler(this.ClearDecoData_Click);
             // 
             // CreateDecoButton
             // 
@@ -643,6 +645,8 @@
             this.Controls.Add(this.GridRowNumeric);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.splitContainer1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "DnLiteAdmin";
             this.Text = "DnLite Admin Board";
             this.Load += new System.EventHandler(this.DnLiteAdmin_Load);

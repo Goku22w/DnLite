@@ -80,6 +80,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.RoleDieButton);
             this.Controls.Add(this.RollResultLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "DnLiteDice";
             this.Text = "Dice Roll";
             this.Load += new System.EventHandler(this.DnLiteDice_Load);
