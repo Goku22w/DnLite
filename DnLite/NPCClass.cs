@@ -17,8 +17,9 @@ namespace NPCClass
         public int AC { get; set; }
         public bool IsHostile { get; set; }
         public bool IsLarge { get; set; }
+        public string ImgFileLocation { get; set; }
 
-        public NPC(string Name, string Description, char Token, int MaxHP, int CurHP, int Lvl, int AC, bool IsHostile, bool IsLarge)
+        public NPC(string Name, string Description, char Token, int MaxHP, int CurHP, int Lvl, int AC, bool IsHostile, bool IsLarge, string ImgFileLocation = "")
         {
             this.Name = Name;
             this.Description = Description;
@@ -29,6 +30,7 @@ namespace NPCClass
             this.AC = AC;
             this.IsHostile = IsHostile;
             this.IsLarge = IsLarge;
+            this.ImgFileLocation = ImgFileLocation;
         }
     }
 }

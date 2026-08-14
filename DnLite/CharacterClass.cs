@@ -15,8 +15,9 @@ namespace CharacterClass
         public int MaxHP { get; set; }
         public int CurHP { get; set; }
         public int Lvl { get; set; }
+        public string ImgFileLocation { get; set; }
 
-        public Character(string Name, string Class, string Description, char Token, int MaxHP, int CurHP, int Lvl)
+        public Character(string Name, string Class, string Description, char Token, int MaxHP, int CurHP, int Lvl, string ImgFileLocation = "")
         {
             this.Name = Name;
             this.Class = Class;
@@ -25,6 +26,7 @@ namespace CharacterClass
             this.MaxHP = MaxHP + Lvl;
             this.CurHP = CurHP + Lvl;
             this.Lvl = Lvl;
+            this.ImgFileLocation = ImgFileLocation;
         }
     }
 }

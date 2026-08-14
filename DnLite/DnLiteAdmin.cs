@@ -52,10 +52,10 @@ namespace DnLite
         // Palette panel inside Admin where tokens/decoration previews live
 
         // Create a small token in the admin palette (visible only to admins)
-        public TokenControl CreatePaletteTokenInAdmin(char letter, Color fillColor, int index, int gridW = 1, int gridH = 1)
+        public TokenControl CreatePaletteTokenInAdmin(char letter, Color fillColor, int index, int gridW = 1, int gridH = 1, string imagePath = "")
         {
             if (AdminPalettePanel == null) return null;
-            TokenControl token = new TokenControl(letter, fillColor);
+            TokenControl token = new TokenControl(letter, fillColor, imagePath);
             int paletteCell = Math.Max(28, DnLiteDisplay.CellSize / 3);
             token.Size = new Size(paletteCell, paletteCell);
             token.GridWidth = Math.Max(1, gridW);
@@ -81,11 +81,11 @@ namespace DnLite
             return CreatePaletteTokenInAdmin(letter, fillColor, index, 1, 1);
         }
 
-        public TokenControl CreatePaletteTokenWithDataInAdmin(char letter, Color fillColor, TokenData data, int gridW = 1, int gridH = 1)
+        public TokenControl CreatePaletteTokenWithDataInAdmin(char letter, Color fillColor, TokenData data, int gridW = 1, int gridH = 1, string imagePath = "")
         {
             if (AdminPalettePanel == null) return null;
             int index = AdminPalettePanel.Controls.Count;
-            var token = CreatePaletteTokenInAdmin(letter, fillColor, index, gridW, gridH);
+            var token = CreatePaletteTokenInAdmin(letter, fillColor, index, gridW, gridH, imagePath);
             if (token != null) token.Tag = data;
             return token;
         }
@@ -112,9 +112,9 @@ namespace DnLite
             return ctrl;
         }
 
-        public void SaveNPC(string Name, string Desc, char Token, int MaxHP, int CurHP, int Lvl, int AC, bool IsHostile, bool IsLarge)
+        public void SaveNPC(string Name, string Desc, char Token, int MaxHP, int CurHP, int Lvl, int AC, bool IsHostile, bool IsLarge, string ImgFileLocation)
         {
-            NPC newNPC = new NPC(Name, Desc, Token, MaxHP, CurHP, Lvl, AC, IsHostile, IsLarge); //creates NPC object with the given parameters
+            NPC newNPC = new NPC(Name, Desc, Token, MaxHP, CurHP, Lvl, AC, IsHostile, IsLarge, ImgFileLocation); //creates NPC object with the given parameters
             var jsonString = JsonSerializer.Serialize(newNPC); //serializes the NPC object to a JSON string
 
             System.IO.File.WriteAllText($"Token Folder/{Name}.npc", jsonString); //writes the JSON string to a file named after the character's name
@@ -155,9 +155,10 @@ namespace DnLite
             CreatureHPNumeric.Text = newNPC.MaxHP.ToString();
             CreatureHostileCheck.Checked = newNPC.IsHostile;
             CreatureSizeCheck.Checked = newNPC.IsLarge;
+            CreatureImgFileLocationText.Text = newNPC.ImgFileLocation ?? "";
         }
 
-        public void CopyAndSaveImage()
+        public void CopyAndSaveDecoImage()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -185,6 +186,43 @@ namespace DnLite
                         MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         DecoImageFileLocation.Text = destinationFilePath; // Update the text box with the new image file location
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error copying image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        public void CopyAndSaveCreatureImage()
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+                openFileDialog.Title = "Select an Image to Copy";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        string destinationDirectory = @"Picture Folder/";
+
+                        if (!Directory.Exists(destinationDirectory))
+                        {
+                            Directory.CreateDirectory(destinationDirectory);
+                        }
+
+                        string sourceFilePath = openFileDialog.FileName;
+                        string fileName = Path.GetFileName(sourceFilePath);
+
+                        string destinationFilePath = Path.Combine(destinationDirectory, fileName);
+
+                        File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
+
+                        MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        CreatureImgFileLocationText.Text = destinationFilePath; // Update the text box with the new image file location
                     }
                     catch (Exception ex)
                     {
@@ -252,7 +290,7 @@ namespace DnLite
 
         private void SaveCreatureButton_Click(object sender, EventArgs e)
         {
-            SaveNPC(CreatureNameText.Text, CreatureDescRichText.Text, CreatureTokenLetter.Text[0], int.Parse(CreatureHPNumeric.Text), int.Parse(CreatureHPNumeric.Text), 0, int.Parse(CreatureACNumeric.Text), CreatureHostileCheck.Checked, CreatureSizeCheck.Checked);
+            SaveNPC(CreatureNameText.Text, CreatureDescRichText.Text, CreatureTokenLetter.Text[0], int.Parse(CreatureHPNumeric.Text), int.Parse(CreatureHPNumeric.Text), 0, int.Parse(CreatureACNumeric.Text), CreatureHostileCheck.Checked, CreatureSizeCheck.Checked, CreatureImgFileLocationText.Text);
 
             // If a token is selected in the admin, apply changes to it
             if (selectedToken != null)
@@ -278,7 +316,7 @@ namespace DnLite
 
         private void LocateImageForDecoButton_Click(object sender, EventArgs e)
         {
-            CopyAndSaveImage();
+            CopyAndSaveDecoImage();
         }
 
         private void CreateCreatureButton_Click(object sender, EventArgs e)
@@ -318,7 +356,7 @@ namespace DnLite
             var td = new TokenData(CreatureNameText.Text ?? string.Empty, (int)CreatureHPNumeric.Value, (int)CreatureHPNumeric.Value, lvl);
 
             // Add new palette token inside admin's palette
-            CreatePaletteTokenWithDataInAdmin(tokenChar, tokenColor, td, gridW, gridH);
+            CreatePaletteTokenWithDataInAdmin(tokenChar, tokenColor, td, gridW, gridH, CreatureImgFileLocationText.Text);
         }
 
         private void CreateDecoButton_Click(object sender, EventArgs e)
@@ -374,7 +412,7 @@ namespace DnLite
             try
             {
                 SelectedTokenViewer.Controls.Clear();
-                var preview = new TokenControl(token.Letter, token.FillColor)
+                var preview = new TokenControl(token.Letter, token.FillColor, token.ImagePath)
                 {
                     Size = new System.Drawing.Size(SelectedTokenViewer.Width - 6, SelectedTokenViewer.Height - 6),
                     Location = new System.Drawing.Point(3, 3),
@@ -484,6 +522,7 @@ namespace DnLite
             CreatureDescRichText.Text = string.Empty;
             CreatureHostileCheck.Checked = false;
             CreatureSizeCheck.Checked = false;
+            CreatureImgFileLocationText.Text = string.Empty;
 
         }
 
@@ -494,6 +533,21 @@ namespace DnLite
             DecoTallNumeric.Value = DecoTallNumeric.Minimum;
             DecoWideNumeric.Value = DecoWideNumeric.Minimum;
             DecoImageFileLocation.Text = string.Empty;
+        }
+
+        private void LocateCreatureImgButton_Click(object sender, EventArgs e)
+        {
+            CopyAndSaveCreatureImage();
+        }
+
+        private void ClearCreatureImgFileLocationButton_Click(object sender, EventArgs e)
+        {
+            CreatureImgFileLocationText.Text = string.Empty;
+        }
+
+        private void ClearDecoImgFileLocationButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

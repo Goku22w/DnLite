@@ -83,6 +83,11 @@
             this.SelectedTokenRemoveButton = new System.Windows.Forms.Button();
             this.AdminPalettePanel = new System.Windows.Forms.Panel();
             this.ClearPaletteButton = new System.Windows.Forms.Button();
+            this.LocateCreatureImgButton = new System.Windows.Forms.Button();
+            this.CreatureImgFileLocationText = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.ClearCreatureImgFileLocationButton = new System.Windows.Forms.Button();
+            this.ClearDecoImgFileLocationButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -105,6 +110,10 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.ClearCreatureImgFileLocationButton);
+            this.splitContainer1.Panel1.Controls.Add(this.LocateCreatureImgButton);
+            this.splitContainer1.Panel1.Controls.Add(this.CreatureImgFileLocationText);
+            this.splitContainer1.Panel1.Controls.Add(this.label19);
             this.splitContainer1.Panel1.Controls.Add(this.LoadCreatureButton);
             this.splitContainer1.Panel1.Controls.Add(this.SaveCreatureButton);
             this.splitContainer1.Panel1.Controls.Add(this.label8);
@@ -124,6 +133,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.ClearDecoImgFileLocationButton);
             this.splitContainer1.Panel2.Controls.Add(this.LocateImageForDecoButton);
             this.splitContainer1.Panel2.Controls.Add(this.DecoImageFileLocation);
             this.splitContainer1.Panel2.Controls.Add(this.label11);
@@ -140,13 +150,13 @@
             this.splitContainer1.Panel2.Controls.Add(this.DecoDescRichText);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.DecoNameText);
-            this.splitContainer1.Size = new System.Drawing.Size(481, 379);
+            this.splitContainer1.Size = new System.Drawing.Size(481, 445);
             this.splitContainer1.SplitterDistance = 239;
             this.splitContainer1.TabIndex = 1;
             // 
             // LoadCreatureButton
             // 
-            this.LoadCreatureButton.Location = new System.Drawing.Point(12, 353);
+            this.LoadCreatureButton.Location = new System.Drawing.Point(12, 416);
             this.LoadCreatureButton.Name = "LoadCreatureButton";
             this.LoadCreatureButton.Size = new System.Drawing.Size(111, 23);
             this.LoadCreatureButton.TabIndex = 25;
@@ -156,7 +166,7 @@
             // 
             // SaveCreatureButton
             // 
-            this.SaveCreatureButton.Location = new System.Drawing.Point(13, 326);
+            this.SaveCreatureButton.Location = new System.Drawing.Point(12, 387);
             this.SaveCreatureButton.Name = "SaveCreatureButton";
             this.SaveCreatureButton.Size = new System.Drawing.Size(111, 23);
             this.SaveCreatureButton.TabIndex = 24;
@@ -199,7 +209,7 @@
             // CreatureSizeCheck
             // 
             this.CreatureSizeCheck.AutoSize = true;
-            this.CreatureSizeCheck.Location = new System.Drawing.Point(12, 274);
+            this.CreatureSizeCheck.Location = new System.Drawing.Point(12, 337);
             this.CreatureSizeCheck.Name = "CreatureSizeCheck";
             this.CreatureSizeCheck.Size = new System.Drawing.Size(159, 17);
             this.CreatureSizeCheck.TabIndex = 19;
@@ -209,7 +219,7 @@
             // CreatureHostileCheck
             // 
             this.CreatureHostileCheck.AutoSize = true;
-            this.CreatureHostileCheck.Location = new System.Drawing.Point(12, 251);
+            this.CreatureHostileCheck.Location = new System.Drawing.Point(12, 314);
             this.CreatureHostileCheck.Name = "CreatureHostileCheck";
             this.CreatureHostileCheck.Size = new System.Drawing.Size(136, 17);
             this.CreatureHostileCheck.TabIndex = 18;
@@ -234,7 +244,7 @@
             // 
             // ClearCreatureData
             // 
-            this.ClearCreatureData.Location = new System.Drawing.Point(149, 297);
+            this.ClearCreatureData.Location = new System.Drawing.Point(149, 360);
             this.ClearCreatureData.Name = "ClearCreatureData";
             this.ClearCreatureData.Size = new System.Drawing.Size(75, 23);
             this.ClearCreatureData.TabIndex = 15;
@@ -244,7 +254,7 @@
             // 
             // CreateCreatureButton
             // 
-            this.CreateCreatureButton.Location = new System.Drawing.Point(12, 297);
+            this.CreateCreatureButton.Location = new System.Drawing.Point(12, 360);
             this.CreateCreatureButton.Name = "CreateCreatureButton";
             this.CreateCreatureButton.Size = new System.Drawing.Size(121, 23);
             this.CreateCreatureButton.TabIndex = 14;
@@ -255,7 +265,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 133);
+            this.label3.Location = new System.Drawing.Point(10, 196);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(138, 13);
             this.label3.TabIndex = 13;
@@ -263,7 +273,7 @@
             // 
             // CreatureDescRichText
             // 
-            this.CreatureDescRichText.Location = new System.Drawing.Point(13, 149);
+            this.CreatureDescRichText.Location = new System.Drawing.Point(13, 212);
             this.CreatureDescRichText.Name = "CreatureDescRichText";
             this.CreatureDescRichText.Size = new System.Drawing.Size(212, 96);
             this.CreatureDescRichText.TabIndex = 12;
@@ -617,11 +627,58 @@
             this.ClearPaletteButton.UseVisualStyleBackColor = true;
             this.ClearPaletteButton.Click += new System.EventHandler(this.ClearPaletteButton_Click);
             // 
+            // LocateCreatureImgButton
+            // 
+            this.LocateCreatureImgButton.Location = new System.Drawing.Point(13, 170);
+            this.LocateCreatureImgButton.Name = "LocateCreatureImgButton";
+            this.LocateCreatureImgButton.Size = new System.Drawing.Size(94, 23);
+            this.LocateCreatureImgButton.TabIndex = 40;
+            this.LocateCreatureImgButton.Text = "Locate Image";
+            this.LocateCreatureImgButton.UseVisualStyleBackColor = true;
+            this.LocateCreatureImgButton.Click += new System.EventHandler(this.LocateCreatureImgButton_Click);
+            // 
+            // CreatureImgFileLocationText
+            // 
+            this.CreatureImgFileLocationText.Enabled = false;
+            this.CreatureImgFileLocationText.Location = new System.Drawing.Point(13, 144);
+            this.CreatureImgFileLocationText.Name = "CreatureImgFileLocationText";
+            this.CreatureImgFileLocationText.Size = new System.Drawing.Size(211, 20);
+            this.CreatureImgFileLocationText.TabIndex = 39;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(10, 128);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(157, 13);
+            this.label19.TabIndex = 38;
+            this.label19.Text = "Locate Image for Creature/NPC";
+            // 
+            // ClearCreatureImgFileLocationButton
+            // 
+            this.ClearCreatureImgFileLocationButton.Location = new System.Drawing.Point(149, 170);
+            this.ClearCreatureImgFileLocationButton.Name = "ClearCreatureImgFileLocationButton";
+            this.ClearCreatureImgFileLocationButton.Size = new System.Drawing.Size(75, 23);
+            this.ClearCreatureImgFileLocationButton.TabIndex = 41;
+            this.ClearCreatureImgFileLocationButton.Text = "Clear Image";
+            this.ClearCreatureImgFileLocationButton.UseVisualStyleBackColor = true;
+            this.ClearCreatureImgFileLocationButton.Click += new System.EventHandler(this.ClearCreatureImgFileLocationButton_Click);
+            // 
+            // ClearDecoImgFileLocationButton
+            // 
+            this.ClearDecoImgFileLocationButton.Location = new System.Drawing.Point(149, 244);
+            this.ClearDecoImgFileLocationButton.Name = "ClearDecoImgFileLocationButton";
+            this.ClearDecoImgFileLocationButton.Size = new System.Drawing.Size(75, 23);
+            this.ClearDecoImgFileLocationButton.TabIndex = 42;
+            this.ClearDecoImgFileLocationButton.Text = "Clear Image";
+            this.ClearDecoImgFileLocationButton.UseVisualStyleBackColor = true;
+            this.ClearDecoImgFileLocationButton.Click += new System.EventHandler(this.ClearDecoImgFileLocationButton_Click);
+            // 
             // DnLiteAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(862, 407);
+            this.ClientSize = new System.Drawing.Size(862, 468);
             this.Controls.Add(this.ClearPaletteButton);
             this.Controls.Add(this.SelectedTokenRemoveButton);
             this.Controls.Add(this.AdminPalettePanel);
@@ -727,5 +784,10 @@
         private System.Windows.Forms.Button SelectedTokenRemoveButton;
         private System.Windows.Forms.Panel AdminPalettePanel;
         private System.Windows.Forms.Button ClearPaletteButton;
+        private System.Windows.Forms.Button LocateCreatureImgButton;
+        private System.Windows.Forms.TextBox CreatureImgFileLocationText;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button ClearCreatureImgFileLocationButton;
+        private System.Windows.Forms.Button ClearDecoImgFileLocationButton;
     }
 }

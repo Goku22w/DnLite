@@ -71,11 +71,11 @@ namespace DnLite
         }
 
         // Forward request to add a palette token into the admin palette
-        public void AddPaletteTokenToAdmin(char letter, Color fillColor, TokenData data, int gridW = 1, int gridH = 1)
+        public void AddPaletteTokenToAdmin(char letter, Color fillColor, TokenData data, int gridW = 1, int gridH = 1, string imagePath = "")
         {
             try
             {
-                adminForm?.CreatePaletteTokenWithDataInAdmin(letter, fillColor, data, gridW, gridH);
+                adminForm?.CreatePaletteTokenWithDataInAdmin(letter, fillColor, data, gridW, gridH, imagePath);
             }
             catch { }
         }
@@ -170,7 +170,7 @@ namespace DnLite
                         gh = Math.Max(1, paletteToken.GridHeight);
                     }
 
-                    TokenControl newToken = CreateToken(paletteToken?.Letter ?? '\0', paletteToken?.FillColor ?? Color.Gray, gridX, gridY, gw, gh);
+                    TokenControl newToken = CreateToken(paletteToken?.Letter ?? '\0', paletteToken?.FillColor ?? Color.Gray, gridX, gridY, gw, gh, paletteToken?.ImagePath ?? "");
                     // propagate metadata (TokenData or other tag) from the palette token to the placed token
                     if (paletteToken != null && paletteToken.Tag != null)
                     {
@@ -275,9 +275,9 @@ namespace DnLite
         }
 
         // Create a circular token with a single letter, placed at the given grid coordinates
-        public TokenControl CreateToken(char letter, Color fillColor, int gridX, int gridY, int gridW = 1, int gridH = 1)
+        public TokenControl CreateToken(char letter, Color fillColor, int gridX, int gridY, int gridW = 1, int gridH = 1, string imagePath = "")
         {
-            TokenControl token = new TokenControl(letter, fillColor)
+            TokenControl token = new TokenControl(letter, fillColor, imagePath)
             {
                 GridWidth = Math.Max(1, gridW),
                 GridHeight = Math.Max(1, gridH)
