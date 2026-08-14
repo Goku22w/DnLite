@@ -17,11 +17,13 @@ namespace DnLite
         public event Action<int> RollCompleted;
         // When true the dice window will attempt to stay above its owner (the display)
         public bool StayAboveOwner { get; set; } = true;
+        private DnLiteDisplay displayForm;
 
         private bool hooksInstalled = false;
-        public DnLiteDice()
+        public DnLiteDice(DnLiteDisplay display)
         {
             InitializeComponent();
+            displayForm = display;
         }
 
         protected override void OnShown(EventArgs e)
@@ -86,7 +88,23 @@ namespace DnLite
         {
             // Unsubscribe to avoid repeated calls
             if (dodecaControl != null) dodecaControl.RollCompleted -= OnRollCompleted;
-            LastRoll = roll;
+
+            // Get level modifier from selected token
+            int levelModifier = 0;
+            string tokenInfo = "";
+            if (displayForm?.CurrentSelectedToken != null)
+            {
+                var tokenData = displayForm.CurrentSelectedToken.Tag as TokenData;
+                if (tokenData != null)
+                {
+                    levelModifier = tokenData.Lvl;
+                    tokenInfo = $" ({tokenData.Name ?? displayForm.CurrentSelectedToken.Letter.ToString()})";
+                }
+            }
+
+            int totalRoll = roll + levelModifier;
+            LastRoll = totalRoll;
+
             // Update UI label inside this form instead of MessageBox and do not close the form
             try
             {
@@ -95,16 +113,23 @@ namespace DnLite
                     this.BeginInvoke((Action)(() => OnRollCompleted(roll)));
                     return;
                 }
-                // show result in DiceRollOutputLabel as plain text
+                // show result in DiceRollOutputLabel with modifier breakdown
                 try
                 {
-                    DiceRollOutputLabel.Text = roll.ToString();
+                    if (levelModifier > 0)
+                    {
+                        DiceRollOutputLabel.Text = $"{roll} +{levelModifier}";
+                    }
+                    else
+                    {
+                        DiceRollOutputLabel.Text = roll.ToString();
+                    }
                 }
                 catch { }
                 // re-enable roll button
                 try { RoleDieButton.Enabled = true; } catch { }
                 // raise external event so other forms can react
-                RollCompleted?.Invoke(roll);
+                RollCompleted?.Invoke(totalRoll);
             }
             catch { }
         }

@@ -18,9 +18,17 @@ namespace DnLite
     {
         private DnLiteAdmin adminForm;
         private DnLiteDice diceFormInstance;
+        private TokenControl currentSelectedToken;
+
         public DnLiteDisplay()
         {
             InitializeComponent();
+        }
+
+        // Property to get the currently selected token
+        public TokenControl CurrentSelectedToken
+        {
+            get { return currentSelectedToken; }
         }
 
         // Add a single initiative entry to the initiative list
@@ -55,7 +63,7 @@ namespace DnLite
             DnLitePC pcForm = new DnLitePC(this);
             adminForm = new DnLiteAdmin(this);
             // No-op touch: added a harmless comment to mark file as edited before adding menu hook
-            DnLiteDice diceForm = new DnLiteDice();
+            DnLiteDice diceForm = new DnLiteDice(this);
             pcForm.Show();
             adminForm.Show(); //Create and show the other forms on load
             diceForm.Show();
@@ -236,6 +244,7 @@ namespace DnLite
             {
                 try
                 {
+                    currentSelectedToken = placedToken;
                     adminForm?.DisplayTokenInfo(placedToken);
                 }
                 catch
@@ -371,7 +380,7 @@ namespace DnLite
         {
             if (diceFormInstance == null || diceFormInstance.IsDisposed)
             {
-                diceFormInstance = new DnLiteDice();
+                diceFormInstance = new DnLiteDice(this);
             }
             diceFormInstance.Show();
             diceFormInstance.BringToFront();

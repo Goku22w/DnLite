@@ -36,11 +36,11 @@
             // 
             // RoleDieButton
             // 
-            this.RoleDieButton.Location = new System.Drawing.Point(15, 155);
+            this.RoleDieButton.Location = new System.Drawing.Point(12, 155);
             this.RoleDieButton.Name = "RoleDieButton";
-            this.RoleDieButton.Size = new System.Drawing.Size(75, 23);
+            this.RoleDieButton.Size = new System.Drawing.Size(56, 23);
             this.RoleDieButton.TabIndex = 0;
-            this.RoleDieButton.Text = "Roll the Die";
+            this.RoleDieButton.Text = "Roll Die";
             this.RoleDieButton.UseVisualStyleBackColor = true;
             this.RoleDieButton.Click += new System.EventHandler(this.RoleDieButton_Click);
             // 
@@ -55,7 +55,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(96, 160);
+            this.label1.Location = new System.Drawing.Point(74, 160);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(71, 13);
             this.label1.TabIndex = 2;
@@ -65,7 +65,7 @@
             // 
             this.DiceRollOutputLabel.AutoSize = true;
             this.DiceRollOutputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DiceRollOutputLabel.Location = new System.Drawing.Point(164, 155);
+            this.DiceRollOutputLabel.Location = new System.Drawing.Point(142, 155);
             this.DiceRollOutputLabel.Name = "DiceRollOutputLabel";
             this.DiceRollOutputLabel.Size = new System.Drawing.Size(21, 24);
             this.DiceRollOutputLabel.TabIndex = 3;
