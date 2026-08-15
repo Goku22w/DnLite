@@ -335,16 +335,13 @@ namespace DnLite
 
             char tokenChar = CreatureTokenLetter.Text.Trim()[0];
 
-            // Choose a default color based on hostility/size
-            Color tokenColor = Color.Gray;
-            if (CreatureHostileCheck.Checked) tokenColor = Color.Red;
-            else tokenColor = Color.Blue;
+            // Choose a base color based on hostility
+            Color baseColor = Color.Gray;
+            if (CreatureHostileCheck.Checked) baseColor = Color.Red;
+            else baseColor = Color.Blue;
 
-            // Larger creatures get a different tint so they're visually distinct
-            if (CreatureSizeCheck.Checked)
-            {
-                tokenColor = ControlPaint.Light(tokenColor);
-            }
+            // Calculate display color - larger creatures get a lighter tint
+            Color displayColor = CreatureSizeCheck.Checked ? ControlPaint.Light(baseColor) : baseColor;
 
             int gridW = CreatureSizeCheck.Checked ? 2 : 1;
             int gridH = CreatureSizeCheck.Checked ? 2 : 1;
@@ -353,10 +350,10 @@ namespace DnLite
             // Determine level if a control exists; default to 0
             int lvl = 0;
 
-            var td = new TokenData(CreatureNameText.Text ?? string.Empty, (int)CreatureHPNumeric.Value, (int)CreatureHPNumeric.Value, lvl);
+            var td = new TokenData(CreatureNameText.Text ?? string.Empty, (int)CreatureHPNumeric.Value, (int)CreatureHPNumeric.Value, lvl, isPlayer: false, isHostile: CreatureHostileCheck.Checked, isLarge: CreatureSizeCheck.Checked, baseColor: baseColor);
 
             // Add new palette token inside admin's palette
-            CreatePaletteTokenWithDataInAdmin(tokenChar, tokenColor, td, gridW, gridH, CreatureImgFileLocationText.Text);
+            CreatePaletteTokenWithDataInAdmin(tokenChar, displayColor, td, gridW, gridH, CreatureImgFileLocationText.Text);
         }
 
         private void CreateDecoButton_Click(object sender, EventArgs e)
@@ -398,6 +395,9 @@ namespace DnLite
                 SelectedTokenMaxHPNumeric.Value = td.MaxHP;
                 SelectedTokenCurHPNumeric.Value = td.CurHP;
                 SelectedTokenLvlNumeric.Value = td.Lvl;
+
+                // Disable hostile toggle for player characters
+                SelectedTokenToggleNPCHostile.Enabled = !td.IsPlayer;
             }
             else
             {
@@ -406,6 +406,9 @@ namespace DnLite
                 SelectedTokenMaxHPNumeric.Value = Math.Max(SelectedTokenMaxHPNumeric.Minimum, Math.Min(SelectedTokenMaxHPNumeric.Maximum, 1));
                 SelectedTokenCurHPNumeric.Value = Math.Max(SelectedTokenCurHPNumeric.Minimum, Math.Min(SelectedTokenCurHPNumeric.Maximum, 1));
                 SelectedTokenLvlNumeric.Value = Math.Max(SelectedTokenLvlNumeric.Minimum, Math.Min(SelectedTokenLvlNumeric.Maximum, 0));
+
+                // Enable both buttons for tokens without TokenData (assumed to be NPCs)
+                SelectedTokenToggleNPCHostile.Enabled = true;
             }
 
             // Render a small preview of the token inside SelectedTokenViewer
@@ -503,6 +506,68 @@ namespace DnLite
             {
                 //MessageBox.Show("Failed to remove token.", "Remove Token", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void SelectedTokenToggleNPCHostile_Click(object sender, EventArgs e)
+        {
+            if (selectedToken == null) return;
+
+            TokenData td = selectedToken.Tag as TokenData;
+            if (td == null)
+            {
+                // Create TokenData if it doesn't exist
+                td = new TokenData(SelectedTokenNameBox.Text, (int)SelectedTokenMaxHPNumeric.Value, (int)SelectedTokenCurHPNumeric.Value, (int)SelectedTokenLvlNumeric.Value);
+                selectedToken.Tag = td;
+            }
+
+            // Don't allow toggling hostility for player characters
+            if (td.IsPlayer) return;
+
+            // Toggle hostility
+            td.IsHostile = !td.IsHostile;
+
+            // Update base color based on hostility
+            Color newBaseColor = td.IsHostile ? Color.Red : Color.Blue;
+            td.SetBaseColor(newBaseColor);
+
+            // Update display color based on size
+            selectedToken.FillColor = td.IsLarge ? ControlPaint.Light(newBaseColor) : newBaseColor;
+
+            // Refresh the token display
+            selectedToken.Invalidate();
+            DisplayTokenInfo(selectedToken);
+        }
+
+        private void SelectedTokenToggleNPCSize_Click(object sender, EventArgs e)
+        {
+            if (selectedToken == null) return;
+
+            TokenData td = selectedToken.Tag as TokenData;
+            if (td == null)
+            {
+                // Create TokenData if it doesn't exist
+                td = new TokenData(SelectedTokenNameBox.Text, (int)SelectedTokenMaxHPNumeric.Value, (int)SelectedTokenCurHPNumeric.Value, (int)SelectedTokenLvlNumeric.Value);
+                selectedToken.Tag = td;
+            }
+
+            // Toggle size
+            td.IsLarge = !td.IsLarge;
+
+            // Update GridWidth and GridHeight
+            selectedToken.GridWidth = td.IsLarge ? 2 : 1;
+            selectedToken.GridHeight = td.IsLarge ? 2 : 1;
+
+            // Resize the token on the grid
+            int cellSize = DnLiteDisplay.CellSize;
+            selectedToken.Size = new Size(selectedToken.GridWidth * cellSize, selectedToken.GridHeight * cellSize);
+
+            // Update token color based on base color and size
+            Color baseColor = td.GetBaseColor();
+            selectedToken.FillColor = td.IsLarge ? ControlPaint.Light(baseColor) : baseColor;
+
+            // Refresh the token display
+            selectedToken.Invalidate();
+            DisplayTokenInfo(selectedToken);
         }
 
         private void ClearPaletteButton_Click(object sender, EventArgs e)

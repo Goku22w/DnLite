@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.ClearCreatureImgFileLocationButton = new System.Windows.Forms.Button();
+            this.LocateCreatureImgButton = new System.Windows.Forms.Button();
+            this.CreatureImgFileLocationText = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
             this.LoadCreatureButton = new System.Windows.Forms.Button();
             this.SaveCreatureButton = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
@@ -45,6 +49,7 @@
             this.CreatureDescRichText = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.CreatureNameText = new System.Windows.Forms.TextBox();
+            this.ClearDecoImgFileLocationButton = new System.Windows.Forms.Button();
             this.LocateImageForDecoButton = new System.Windows.Forms.Button();
             this.DecoImageFileLocation = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -83,11 +88,8 @@
             this.SelectedTokenRemoveButton = new System.Windows.Forms.Button();
             this.AdminPalettePanel = new System.Windows.Forms.Panel();
             this.ClearPaletteButton = new System.Windows.Forms.Button();
-            this.LocateCreatureImgButton = new System.Windows.Forms.Button();
-            this.CreatureImgFileLocationText = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.ClearCreatureImgFileLocationButton = new System.Windows.Forms.Button();
-            this.ClearDecoImgFileLocationButton = new System.Windows.Forms.Button();
+            this.SelectedTokenToggleNPCHostile = new System.Windows.Forms.Button();
+            this.SelectedTokenToggleNPCSize = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -153,6 +155,43 @@
             this.splitContainer1.Size = new System.Drawing.Size(481, 445);
             this.splitContainer1.SplitterDistance = 239;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // ClearCreatureImgFileLocationButton
+            // 
+            this.ClearCreatureImgFileLocationButton.Location = new System.Drawing.Point(149, 170);
+            this.ClearCreatureImgFileLocationButton.Name = "ClearCreatureImgFileLocationButton";
+            this.ClearCreatureImgFileLocationButton.Size = new System.Drawing.Size(75, 23);
+            this.ClearCreatureImgFileLocationButton.TabIndex = 41;
+            this.ClearCreatureImgFileLocationButton.Text = "Clear Image";
+            this.ClearCreatureImgFileLocationButton.UseVisualStyleBackColor = true;
+            this.ClearCreatureImgFileLocationButton.Click += new System.EventHandler(this.ClearCreatureImgFileLocationButton_Click);
+            // 
+            // LocateCreatureImgButton
+            // 
+            this.LocateCreatureImgButton.Location = new System.Drawing.Point(13, 170);
+            this.LocateCreatureImgButton.Name = "LocateCreatureImgButton";
+            this.LocateCreatureImgButton.Size = new System.Drawing.Size(94, 23);
+            this.LocateCreatureImgButton.TabIndex = 40;
+            this.LocateCreatureImgButton.Text = "Locate Image";
+            this.LocateCreatureImgButton.UseVisualStyleBackColor = true;
+            this.LocateCreatureImgButton.Click += new System.EventHandler(this.LocateCreatureImgButton_Click);
+            // 
+            // CreatureImgFileLocationText
+            // 
+            this.CreatureImgFileLocationText.Enabled = false;
+            this.CreatureImgFileLocationText.Location = new System.Drawing.Point(13, 144);
+            this.CreatureImgFileLocationText.Name = "CreatureImgFileLocationText";
+            this.CreatureImgFileLocationText.Size = new System.Drawing.Size(211, 20);
+            this.CreatureImgFileLocationText.TabIndex = 39;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(10, 128);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(157, 13);
+            this.label19.TabIndex = 38;
+            this.label19.Text = "Locate Image for Creature/NPC";
             // 
             // LoadCreatureButton
             // 
@@ -294,6 +333,16 @@
             this.CreatureNameText.Name = "CreatureNameText";
             this.CreatureNameText.Size = new System.Drawing.Size(212, 20);
             this.CreatureNameText.TabIndex = 8;
+            // 
+            // ClearDecoImgFileLocationButton
+            // 
+            this.ClearDecoImgFileLocationButton.Location = new System.Drawing.Point(149, 244);
+            this.ClearDecoImgFileLocationButton.Name = "ClearDecoImgFileLocationButton";
+            this.ClearDecoImgFileLocationButton.Size = new System.Drawing.Size(75, 23);
+            this.ClearDecoImgFileLocationButton.TabIndex = 42;
+            this.ClearDecoImgFileLocationButton.Text = "Clear Image";
+            this.ClearDecoImgFileLocationButton.UseVisualStyleBackColor = true;
+            this.ClearDecoImgFileLocationButton.Click += new System.EventHandler(this.ClearDecoImgFileLocationButton_Click);
             // 
             // LocateImageForDecoButton
             // 
@@ -509,7 +558,7 @@
             // 
             // SelectedTokenViewer
             // 
-            this.SelectedTokenViewer.Location = new System.Drawing.Point(499, 269);
+            this.SelectedTokenViewer.Location = new System.Drawing.Point(499, 302);
             this.SelectedTokenViewer.Name = "SelectedTokenViewer";
             this.SelectedTokenViewer.Size = new System.Drawing.Size(91, 86);
             this.SelectedTokenViewer.TabIndex = 40;
@@ -601,7 +650,7 @@
             // 
             // SelectedTokenRemoveButton
             // 
-            this.SelectedTokenRemoveButton.Location = new System.Drawing.Point(600, 293);
+            this.SelectedTokenRemoveButton.Location = new System.Drawing.Point(600, 326);
             this.SelectedTokenRemoveButton.Name = "SelectedTokenRemoveButton";
             this.SelectedTokenRemoveButton.Size = new System.Drawing.Size(75, 62);
             this.SelectedTokenRemoveButton.TabIndex = 51;
@@ -627,58 +676,33 @@
             this.ClearPaletteButton.UseVisualStyleBackColor = true;
             this.ClearPaletteButton.Click += new System.EventHandler(this.ClearPaletteButton_Click);
             // 
-            // LocateCreatureImgButton
+            // SelectedTokenToggleNPCHostile
             // 
-            this.LocateCreatureImgButton.Location = new System.Drawing.Point(13, 170);
-            this.LocateCreatureImgButton.Name = "LocateCreatureImgButton";
-            this.LocateCreatureImgButton.Size = new System.Drawing.Size(94, 23);
-            this.LocateCreatureImgButton.TabIndex = 40;
-            this.LocateCreatureImgButton.Text = "Locate Image";
-            this.LocateCreatureImgButton.UseVisualStyleBackColor = true;
-            this.LocateCreatureImgButton.Click += new System.EventHandler(this.LocateCreatureImgButton_Click);
+            this.SelectedTokenToggleNPCHostile.Location = new System.Drawing.Point(499, 273);
+            this.SelectedTokenToggleNPCHostile.Name = "SelectedTokenToggleNPCHostile";
+            this.SelectedTokenToggleNPCHostile.Size = new System.Drawing.Size(91, 23);
+            this.SelectedTokenToggleNPCHostile.TabIndex = 54;
+            this.SelectedTokenToggleNPCHostile.Text = "Toggle Hostility";
+            this.SelectedTokenToggleNPCHostile.UseVisualStyleBackColor = true;
+            this.SelectedTokenToggleNPCHostile.Click += new System.EventHandler(this.SelectedTokenToggleNPCHostile_Click);
             // 
-            // CreatureImgFileLocationText
+            // SelectedTokenToggleNPCSize
             // 
-            this.CreatureImgFileLocationText.Enabled = false;
-            this.CreatureImgFileLocationText.Location = new System.Drawing.Point(13, 144);
-            this.CreatureImgFileLocationText.Name = "CreatureImgFileLocationText";
-            this.CreatureImgFileLocationText.Size = new System.Drawing.Size(211, 20);
-            this.CreatureImgFileLocationText.TabIndex = 39;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(10, 128);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(157, 13);
-            this.label19.TabIndex = 38;
-            this.label19.Text = "Locate Image for Creature/NPC";
-            // 
-            // ClearCreatureImgFileLocationButton
-            // 
-            this.ClearCreatureImgFileLocationButton.Location = new System.Drawing.Point(149, 170);
-            this.ClearCreatureImgFileLocationButton.Name = "ClearCreatureImgFileLocationButton";
-            this.ClearCreatureImgFileLocationButton.Size = new System.Drawing.Size(75, 23);
-            this.ClearCreatureImgFileLocationButton.TabIndex = 41;
-            this.ClearCreatureImgFileLocationButton.Text = "Clear Image";
-            this.ClearCreatureImgFileLocationButton.UseVisualStyleBackColor = true;
-            this.ClearCreatureImgFileLocationButton.Click += new System.EventHandler(this.ClearCreatureImgFileLocationButton_Click);
-            // 
-            // ClearDecoImgFileLocationButton
-            // 
-            this.ClearDecoImgFileLocationButton.Location = new System.Drawing.Point(149, 244);
-            this.ClearDecoImgFileLocationButton.Name = "ClearDecoImgFileLocationButton";
-            this.ClearDecoImgFileLocationButton.Size = new System.Drawing.Size(75, 23);
-            this.ClearDecoImgFileLocationButton.TabIndex = 42;
-            this.ClearDecoImgFileLocationButton.Text = "Clear Image";
-            this.ClearDecoImgFileLocationButton.UseVisualStyleBackColor = true;
-            this.ClearDecoImgFileLocationButton.Click += new System.EventHandler(this.ClearDecoImgFileLocationButton_Click);
+            this.SelectedTokenToggleNPCSize.Location = new System.Drawing.Point(600, 273);
+            this.SelectedTokenToggleNPCSize.Name = "SelectedTokenToggleNPCSize";
+            this.SelectedTokenToggleNPCSize.Size = new System.Drawing.Size(75, 23);
+            this.SelectedTokenToggleNPCSize.TabIndex = 55;
+            this.SelectedTokenToggleNPCSize.Text = "Toggle Size";
+            this.SelectedTokenToggleNPCSize.UseVisualStyleBackColor = true;
+            this.SelectedTokenToggleNPCSize.Click += new System.EventHandler(this.SelectedTokenToggleNPCSize_Click);
             // 
             // DnLiteAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 468);
+            this.Controls.Add(this.SelectedTokenToggleNPCSize);
+            this.Controls.Add(this.SelectedTokenToggleNPCHostile);
             this.Controls.Add(this.ClearPaletteButton);
             this.Controls.Add(this.SelectedTokenRemoveButton);
             this.Controls.Add(this.AdminPalettePanel);
@@ -789,5 +813,7 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button ClearCreatureImgFileLocationButton;
         private System.Windows.Forms.Button ClearDecoImgFileLocationButton;
+        private System.Windows.Forms.Button SelectedTokenToggleNPCHostile;
+        private System.Windows.Forms.Button SelectedTokenToggleNPCSize;
     }
 }

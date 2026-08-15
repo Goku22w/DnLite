@@ -95,15 +95,21 @@ namespace DnLite
                 if (parentDisplay != null)
                 {
                     char tokenChar = newCharacter.Token;
-                    // Map class selection to a default color
-                    Color tokenColor = Color.Gray;
+                    // Map class selection to a default color (base color)
+                    Color baseColor = Color.Gray;
                     string cls = (newCharacter.Class ?? "").ToLowerInvariant();
-                    if (cls.Contains("melee")) tokenColor = Color.DarkGreen;
-                    else if (cls.Contains("ranger")) tokenColor = Color.Green;
-                    else if (cls.Contains("caster")) tokenColor = Color.LightGreen;
+                    if (cls.Contains("melee")) baseColor = Color.DarkGreen;
+                    else if (cls.Contains("ranger")) baseColor = Color.Green;
+                    else if (cls.Contains("caster")) baseColor = Color.LightGreen;
 
-                    var td = new TokenData(newCharacter.Name ?? string.Empty, newCharacter.MaxHP, newCharacter.CurHP, newCharacter.Lvl);
-                    parentDisplay.AddPaletteTokenToAdmin(tokenChar, tokenColor, td, 1, 1, newCharacter.ImgFileLocation ?? "");
+                    // Calculate display color based on size
+                    Color displayColor = newCharacter.isLarge ? ControlPaint.Light(baseColor) : baseColor;
+
+                    int gridW = newCharacter.isLarge ? 2 : 1;
+                    int gridH = newCharacter.isLarge ? 2 : 1;
+
+                    var td = new TokenData(newCharacter.Name ?? string.Empty, newCharacter.MaxHP, newCharacter.CurHP, newCharacter.Lvl, isPlayer: true, isHostile: false, isLarge: newCharacter.isLarge, baseColor: baseColor);
+                    parentDisplay.AddPaletteTokenToAdmin(tokenChar, displayColor, td, gridW, gridH, newCharacter.ImgFileLocation ?? "");
                 }
             }
             catch { }
@@ -172,16 +178,16 @@ namespace DnLite
 
             char tokenChar = CharacterTokenLetter.Text.Trim()[0];
 
-            // Map class selection to a default color
-            Color tokenColor = Color.Gray;
+            // Map class selection to a default color (base color)
+            Color baseColor = Color.Gray;
             string cls = (CharacterClassCombo.Text ?? "").ToLowerInvariant();
-            if (cls.Contains("melee")) tokenColor = Color.Green;
-            else if (cls.Contains("ranger")) tokenColor = Color.DarkGreen;
-            else if (cls.Contains("caster")) tokenColor = Color.LightGreen;
+            if (cls.Contains("melee")) baseColor = Color.DarkGreen;
+            else if (cls.Contains("ranger")) baseColor = Color.Green;
+            else if (cls.Contains("caster")) baseColor = Color.LightGreen;
 
             // Add this token to the admin palette via the display
-            var td = new TokenData(CharacterNameText.Text ?? string.Empty, 3, 3, 0);
-            parentDisplay.AddPaletteTokenToAdmin(tokenChar, tokenColor, td, 1, 1, CharacterImgFileLocationText.Text);
+            var td = new TokenData(CharacterNameText.Text ?? string.Empty, 3, 3, 0, isPlayer: true, isHostile: false, isLarge: false, baseColor: baseColor);
+            parentDisplay.AddPaletteTokenToAdmin(tokenChar, baseColor, td, 1, 1, CharacterImgFileLocationText.Text);
         }
 
         private void ClearCharacterButton_Click(object sender, EventArgs e)
