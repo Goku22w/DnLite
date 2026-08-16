@@ -90,6 +90,7 @@
             this.ClearPaletteButton = new System.Windows.Forms.Button();
             this.SelectedTokenToggleNPCHostile = new System.Windows.Forms.Button();
             this.SelectedTokenToggleNPCSize = new System.Windows.Forms.Button();
+            this.SelectedTokenChangeTokenImgButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -696,11 +697,22 @@
             this.SelectedTokenToggleNPCSize.UseVisualStyleBackColor = true;
             this.SelectedTokenToggleNPCSize.Click += new System.EventHandler(this.SelectedTokenToggleNPCSize_Click);
             // 
+            // SelectedTokenChangeTokenImgButton
+            // 
+            this.SelectedTokenChangeTokenImgButton.Location = new System.Drawing.Point(499, 394);
+            this.SelectedTokenChangeTokenImgButton.Name = "SelectedTokenChangeTokenImgButton";
+            this.SelectedTokenChangeTokenImgButton.Size = new System.Drawing.Size(99, 37);
+            this.SelectedTokenChangeTokenImgButton.TabIndex = 56;
+            this.SelectedTokenChangeTokenImgButton.Text = "Change Selected Tokens Image";
+            this.SelectedTokenChangeTokenImgButton.UseVisualStyleBackColor = true;
+            this.SelectedTokenChangeTokenImgButton.Click += new System.EventHandler(this.SelectedTokenChangeTokenImgButton_Click);
+            // 
             // DnLiteAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 468);
+            this.Controls.Add(this.SelectedTokenChangeTokenImgButton);
             this.Controls.Add(this.SelectedTokenToggleNPCSize);
             this.Controls.Add(this.SelectedTokenToggleNPCHostile);
             this.Controls.Add(this.ClearPaletteButton);
@@ -815,5 +827,6 @@
         private System.Windows.Forms.Button ClearDecoImgFileLocationButton;
         private System.Windows.Forms.Button SelectedTokenToggleNPCHostile;
         private System.Windows.Forms.Button SelectedTokenToggleNPCSize;
+        private System.Windows.Forms.Button SelectedTokenChangeTokenImgButton;
     }
 }

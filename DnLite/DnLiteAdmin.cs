@@ -195,6 +195,74 @@ namespace DnLite
             }
         }
 
+        public void SelectNewTokenImg()
+        {
+            if (selectedToken == null)
+            {
+                MessageBox.Show("No token is currently selected.", "Change Token Image", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Open file dialog to select an image
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+                openFileDialog.Title = "Select an Image for the Token";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        string destinationDirectory = @"Picture Folder/";
+
+                        if (!Directory.Exists(destinationDirectory))
+                        {
+                            Directory.CreateDirectory(destinationDirectory);
+                        }
+
+                        string sourceFilePath = openFileDialog.FileName;
+                        string fileName = Path.GetFileName(sourceFilePath);
+                        string destinationFilePath = Path.Combine(destinationDirectory, fileName);
+
+                        // Copy the image to the Picture Folder
+                        File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
+
+                        // Check if the selected token is a DecorationControl (decoration) or TokenControl (character/NPC)
+                        if (selectedToken is DecorationControl decoControl)
+                        {
+                            // For DecorationControl: Update the ImagePath property
+                            // This will reload the image without rendering a circle border
+                            decoControl.ImagePath = destinationFilePath;
+
+                            // Update the Tag if it contains a Decoration object
+                            if (decoControl.Tag is Decoration deco)
+                            {
+                                deco.ImgFileLocation = destinationFilePath;
+                            }
+                        }
+                        else
+                        {
+                            // For TokenControl (Character/NPC): Update ImagePath
+                            // This will render the image with a circle border
+                            selectedToken.ImagePath = destinationFilePath;
+                        }
+
+                        // Refresh the token display
+                        selectedToken.Invalidate();
+
+                        // Refresh the preview in the admin panel
+                        DisplayTokenInfo(selectedToken);
+
+                        MessageBox.Show("Token image updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error updating token image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
         public void CopyAndSaveCreatureImage()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -612,7 +680,12 @@ namespace DnLite
 
         private void ClearDecoImgFileLocationButton_Click(object sender, EventArgs e)
         {
+            DecoImageFileLocation.Text = string.Empty;
+        }
 
+        private void SelectedTokenChangeTokenImgButton_Click(object sender, EventArgs e)
+        {
+            SelectNewTokenImg();
         }
     }
 }
