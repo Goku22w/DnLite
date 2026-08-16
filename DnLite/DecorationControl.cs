@@ -159,17 +159,6 @@ namespace DnLite
                 {
                     g.DrawRectangle(p, 0, 0, Width - 1, Height - 1);
                 }
-
-                // Draw error text
-                using (Font f = new Font("Arial", 8))
-                using (Brush tb = new SolidBrush(Color.White))
-                {
-                    string msg = "No Image";
-                    if (!string.IsNullOrEmpty(_imagePath))
-                        msg = $"Failed:\n{Path.GetFileName(_imagePath)}";
-                    var sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-                    g.DrawString(msg, f, tb, new RectangleF(0, 0, Width, Height), sf);
-                }
             }
         }
 
