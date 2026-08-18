@@ -91,6 +91,7 @@
             this.SelectedTokenToggleNPCHostile = new System.Windows.Forms.Button();
             this.SelectedTokenToggleNPCSize = new System.Windows.Forms.Button();
             this.SelectedTokenChangeTokenImgButton = new System.Windows.Forms.Button();
+            this.CreatureLvlNumeric = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -104,6 +105,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenMaxHPNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenCurHPNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenLvlNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CreatureLvlNumeric)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -113,6 +115,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.CreatureLvlNumeric);
             this.splitContainer1.Panel1.Controls.Add(this.ClearCreatureImgFileLocationButton);
             this.splitContainer1.Panel1.Controls.Add(this.LocateCreatureImgButton);
             this.splitContainer1.Panel1.Controls.Add(this.CreatureImgFileLocationText);
@@ -219,15 +222,15 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(10, 89);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(136, 13);
+            this.label8.Size = new System.Drawing.Size(109, 13);
             this.label8.TabIndex = 23;
-            this.label8.Text = "What is their Armour Class?";
+            this.label8.Text = "Armour Class? Level?";
             // 
             // CreatureACNumeric
             // 
             this.CreatureACNumeric.Location = new System.Drawing.Point(13, 105);
             this.CreatureACNumeric.Name = "CreatureACNumeric";
-            this.CreatureACNumeric.Size = new System.Drawing.Size(120, 20);
+            this.CreatureACNumeric.Size = new System.Drawing.Size(56, 20);
             this.CreatureACNumeric.TabIndex = 22;
             // 
             // label7
@@ -661,6 +664,7 @@
             // 
             // AdminPalettePanel
             // 
+            this.AdminPalettePanel.AutoScroll = true;
             this.AdminPalettePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.AdminPalettePanel.Location = new System.Drawing.Point(681, 12);
             this.AdminPalettePanel.Name = "AdminPalettePanel";
@@ -706,6 +710,13 @@
             this.SelectedTokenChangeTokenImgButton.Text = "Change Selected Tokens Image";
             this.SelectedTokenChangeTokenImgButton.UseVisualStyleBackColor = true;
             this.SelectedTokenChangeTokenImgButton.Click += new System.EventHandler(this.SelectedTokenChangeTokenImgButton_Click);
+            // 
+            // CreatureLvlNumeric
+            // 
+            this.CreatureLvlNumeric.Location = new System.Drawing.Point(78, 105);
+            this.CreatureLvlNumeric.Name = "CreatureLvlNumeric";
+            this.CreatureLvlNumeric.Size = new System.Drawing.Size(56, 20);
+            this.CreatureLvlNumeric.TabIndex = 42;
             // 
             // DnLiteAdmin
             // 
@@ -758,6 +769,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenMaxHPNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenCurHPNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenLvlNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CreatureLvlNumeric)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -828,5 +840,6 @@
         private System.Windows.Forms.Button SelectedTokenToggleNPCHostile;
         private System.Windows.Forms.Button SelectedTokenToggleNPCSize;
         private System.Windows.Forms.Button SelectedTokenChangeTokenImgButton;
+        private System.Windows.Forms.NumericUpDown CreatureLvlNumeric;
     }
 }

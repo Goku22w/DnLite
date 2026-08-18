@@ -153,6 +153,7 @@ namespace DnLite
             CreatureTokenLetter.Text = newNPC.Token.ToString();
             CreatureACNumeric.Text = newNPC.AC.ToString();
             CreatureHPNumeric.Text = newNPC.MaxHP.ToString();
+            CreatureLvlNumeric.Value = newNPC.Lvl;
             CreatureHostileCheck.Checked = newNPC.IsHostile;
             CreatureSizeCheck.Checked = newNPC.IsLarge;
             CreatureImgFileLocationText.Text = newNPC.ImgFileLocation ?? "";
@@ -358,7 +359,7 @@ namespace DnLite
 
         private void SaveCreatureButton_Click(object sender, EventArgs e)
         {
-            SaveNPC(CreatureNameText.Text, CreatureDescRichText.Text, CreatureTokenLetter.Text[0], int.Parse(CreatureHPNumeric.Text), int.Parse(CreatureHPNumeric.Text), 0, int.Parse(CreatureACNumeric.Text), CreatureHostileCheck.Checked, CreatureSizeCheck.Checked, CreatureImgFileLocationText.Text);
+            SaveNPC(CreatureNameText.Text, CreatureDescRichText.Text, CreatureTokenLetter.Text[0], int.Parse(CreatureHPNumeric.Text), int.Parse(CreatureHPNumeric.Text), (int)CreatureLvlNumeric.Value, int.Parse(CreatureACNumeric.Text), CreatureHostileCheck.Checked, CreatureSizeCheck.Checked, CreatureImgFileLocationText.Text);
 
             // If a token is selected in the admin, apply changes to it
             if (selectedToken != null)
@@ -415,8 +416,8 @@ namespace DnLite
             int gridH = CreatureSizeCheck.Checked ? 2 : 1;
 
             // Create TokenData for this creature so the admin can show HP/name when placed
-            // Determine level if a control exists; default to 0
-            int lvl = 0;
+            // Get level from the numeric control
+            int lvl = (int)CreatureLvlNumeric.Value;
 
             var td = new TokenData(CreatureNameText.Text ?? string.Empty, (int)CreatureHPNumeric.Value, (int)CreatureHPNumeric.Value, lvl, isPlayer: false, isHostile: CreatureHostileCheck.Checked, isLarge: CreatureSizeCheck.Checked, baseColor: baseColor);
 
