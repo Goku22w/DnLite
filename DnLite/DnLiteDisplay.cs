@@ -38,6 +38,60 @@ namespace DnLite
             InitiativeList.Items.Add(entry);
         }
 
+        // Generate a unique name for initiative entries by adding numbering (-1-, -2-, etc.) if duplicates exist
+        public string GetUniqueInitiativeName(string baseName)
+        {
+            if (string.IsNullOrEmpty(baseName)) return baseName;
+
+            // Check if this exact name already exists in the initiative list
+            bool baseNameExists = false;
+            int highestNumber = 0;
+
+            foreach (var item in InitiativeList.Items)
+            {
+                string entry = item.ToString();
+                if (entry.Contains("Initiative |"))
+                {
+                    // Extract the name part after "Initiative | "
+                    string[] parts = entry.Split(new[] { "Initiative |" }, StringSplitOptions.None);
+                    if (parts.Length > 1)
+                    {
+                        string entryName = parts[1].Trim();
+
+                        // Check if it matches the base name exactly
+                        if (entryName.Equals(baseName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            baseNameExists = true;
+                        }
+                        // Check if it matches the base name with a number suffix (e.g., "Name -1-")
+                        else if (entryName.StartsWith(baseName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            // Try to extract the number from the suffix
+                            string suffix = entryName.Substring(baseName.Length).Trim();
+                            if (suffix.StartsWith("-") && suffix.EndsWith("-"))
+                            {
+                                string numberPart = suffix.Trim('-');
+                                if (int.TryParse(numberPart, out int number))
+                                {
+                                    highestNumber = Math.Max(highestNumber, number);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // If the base name exists, we need to add numbering
+            if (baseNameExists || highestNumber > 0)
+            {
+                // Return the base name with the next available number
+                return $"{baseName} -{highestNumber + 1}-";
+            }
+
+            // No duplicates found, return the original name
+            return baseName;
+        }
+
         // Sort the initiative list entries (expects entries start with a numeric roll)
         public void SortInitiativeList()
         {
@@ -311,18 +365,58 @@ namespace DnLite
 
         // Palette functions moved to DnLiteAdmin; display no longer hosts a palette panel.
 
-        public void TestInitiativeFunc(int count)
+        //public void TestInitiativeFunc(int count)
+        //{
+        //    Random randomNumber = new Random(); //Roll Dice functionality
+        //    for (int i = 0; i < count; i++) //randomly fill the initiative list with the given number of NPCs
+        //    {
+        //        InitiativeList.Items.Add(randomNumber.Next(1, 21).ToString() + " Initiative | NPC " + (i + 1).ToString());
+        //    }
+        //    var sortedItems = InitiativeList.Items.Cast<string>()
+        //                        .OrderByDescending(x => int.Parse(x.Split(' ')[0]))
+        //                        .ToArray();
+        //    InitiativeList.Items.Clear();
+        //    InitiativeList.Items.AddRange(sortedItems); //sorts the initiative list in descending order
+        //} no longer need test function, as the admin form can add NPCs to the initiative list directly
+
+        public void RemoveSelectedInitiativeFunc(string tokenName)
         {
-            Random randomNumber = new Random(); //Roll Dice functionality
-            for (int i = 0; i < count; i++) //randomly fill the initiative list with the given number of NPCs
+            if (string.IsNullOrEmpty(tokenName)) return;
+
+            try
             {
-                InitiativeList.Items.Add(randomNumber.Next(1, 21).ToString() + " Initiative | NPC " + (i + 1).ToString());
+                // Find and remove all initiative entries that match the token name
+                // Initiative entries are formatted as "{roll} Initiative | {name}"
+                var itemsToRemove = new List<object>();
+
+                foreach (var item in InitiativeList.Items)
+                {
+                    string entry = item.ToString();
+                    if (entry.Contains("Initiative |"))
+                    {
+                        // Extract the name part after "Initiative | "
+                        string[] parts = entry.Split(new[] { "Initiative |" }, StringSplitOptions.None);
+                        if (parts.Length > 1)
+                        {
+                            string entryName = parts[1].Trim();
+                            if (entryName.Equals(tokenName, StringComparison.OrdinalIgnoreCase))
+                            {
+                                itemsToRemove.Add(item);
+                            }
+                        }
+                    }
+                }
+
+                // Remove all matching items
+                foreach (var item in itemsToRemove)
+                {
+                    InitiativeList.Items.Remove(item);
+                }
             }
-            var sortedItems = InitiativeList.Items.Cast<string>()
-                                .OrderByDescending(x => int.Parse(x.Split(' ')[0]))
-                                .ToArray();
-            InitiativeList.Items.Clear();
-            InitiativeList.Items.AddRange(sortedItems); //sorts the initiative list in descending order
+            catch
+            {
+                // Silently handle any errors
+            }
         }
 
         public void ClearInitiativeFunc()

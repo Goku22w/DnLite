@@ -349,10 +349,6 @@ namespace DnLite
 
             display.UpdateGridDimensions((int)GridRowNumeric.Value, (int)GridColumNumeric.Value);
 
-        private void InitiativeTestButton_Click(object sender, EventArgs e)  //randomly fill the initiative list with 10 NPCs for testing purposes
-
-        => display.TestInitiativeFunc(10);
-
         private void InitiativeClearButton_Click(object sender, EventArgs e) //clean up the initiative list
 
         => display.ClearInitiativeFunc();
@@ -538,8 +534,19 @@ namespace DnLite
             if (selectedToken == null) return;
             var rnd = new Random();
             int roll = rnd.Next(1, 21);
-            string name = (selectedToken.Tag as TokenData)?.Name ?? SelectedTokenNameBox.Text ?? selectedToken.Letter.ToString();
-            display.AddInitiativeEntry($"{roll} Initiative | {name}");
+            string baseName = (selectedToken.Tag as TokenData)?.Name ?? SelectedTokenNameBox.Text ?? selectedToken.Letter.ToString();
+
+            // Get a unique name with numbering if needed (e.g., "Goblin -1-", "Goblin -2-")
+            string uniqueName = display.GetUniqueInitiativeName(baseName);
+
+            // Store the unique initiative name in the token's data so we can remove it later
+            TokenData td = selectedToken.Tag as TokenData;
+            if (td != null)
+            {
+                td.InitiativeName = uniqueName;
+            }
+
+            display.AddInitiativeEntry($"{roll} Initiative | {uniqueName}");
             try { display.SortInitiativeList(); } catch { }
         }
 
@@ -574,6 +581,50 @@ namespace DnLite
             else
             {
                 //MessageBox.Show("Failed to remove token.", "Remove Token", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SelectedTokenRemoveIntButton_Click(object sender, EventArgs e)
+        {
+            // Remove the selected token from the initiative list
+            if (selectedToken == null)
+            {
+                MessageBox.Show("No token selected to remove from initiative.", "Remove Initiative", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Try to get the stored unique initiative name from TokenData
+            TokenData td = selectedToken.Tag as TokenData;
+            string initiativeName = td?.InitiativeName;
+
+            // Fallback to base name if no initiative name is stored
+            if (string.IsNullOrEmpty(initiativeName))
+            {
+                initiativeName = td?.Name ?? SelectedTokenNameBox.Text ?? selectedToken.Letter.ToString();
+            }
+
+            if (string.IsNullOrEmpty(initiativeName))
+            {
+                MessageBox.Show("Could not determine token name.", "Remove Initiative", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                // Call the display's remove initiative function with the unique name
+                display.RemoveSelectedInitiativeFunc(initiativeName);
+
+                // Clear the stored initiative name since it's no longer in the list
+                if (td != null)
+                {
+                    td.InitiativeName = null;
+                }
+
+                MessageBox.Show($"Removed '{initiativeName}' from initiative list.", "Initiative Removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error removing from initiative: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

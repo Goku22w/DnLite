@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.CreatureLvlNumeric = new System.Windows.Forms.NumericUpDown();
             this.ClearCreatureImgFileLocationButton = new System.Windows.Forms.Button();
             this.LocateCreatureImgButton = new System.Windows.Forms.Button();
             this.CreatureImgFileLocationText = new System.Windows.Forms.TextBox();
@@ -72,7 +73,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.GridRowNumeric = new System.Windows.Forms.NumericUpDown();
             this.SetGridButton = new System.Windows.Forms.Button();
-            this.InitiativeTestButton = new System.Windows.Forms.Button();
             this.InitiativeClearButton = new System.Windows.Forms.Button();
             this.SelectedTokenViewer = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
@@ -91,11 +91,12 @@
             this.SelectedTokenToggleNPCHostile = new System.Windows.Forms.Button();
             this.SelectedTokenToggleNPCSize = new System.Windows.Forms.Button();
             this.SelectedTokenChangeTokenImgButton = new System.Windows.Forms.Button();
-            this.CreatureLvlNumeric = new System.Windows.Forms.NumericUpDown();
+            this.SelectedTokenRemoveIntButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CreatureLvlNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreatureACNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreatureHPNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DecoWideNumeric)).BeginInit();
@@ -105,7 +106,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenMaxHPNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenCurHPNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenLvlNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CreatureLvlNumeric)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -159,6 +159,13 @@
             this.splitContainer1.Size = new System.Drawing.Size(481, 445);
             this.splitContainer1.SplitterDistance = 239;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // CreatureLvlNumeric
+            // 
+            this.CreatureLvlNumeric.Location = new System.Drawing.Point(78, 105);
+            this.CreatureLvlNumeric.Name = "CreatureLvlNumeric";
+            this.CreatureLvlNumeric.Size = new System.Drawing.Size(56, 20);
+            this.CreatureLvlNumeric.TabIndex = 42;
             // 
             // ClearCreatureImgFileLocationButton
             // 
@@ -540,21 +547,11 @@
             this.SetGridButton.UseVisualStyleBackColor = true;
             this.SetGridButton.Click += new System.EventHandler(this.SetGridButton_Click);
             // 
-            // InitiativeTestButton
-            // 
-            this.InitiativeTestButton.Location = new System.Drawing.Point(512, 93);
-            this.InitiativeTestButton.Name = "InitiativeTestButton";
-            this.InitiativeTestButton.Size = new System.Drawing.Size(75, 39);
-            this.InitiativeTestButton.TabIndex = 38;
-            this.InitiativeTestButton.Text = "Test Initiative";
-            this.InitiativeTestButton.UseVisualStyleBackColor = true;
-            this.InitiativeTestButton.Click += new System.EventHandler(this.InitiativeTestButton_Click);
-            // 
             // InitiativeClearButton
             // 
-            this.InitiativeClearButton.Location = new System.Drawing.Point(600, 93);
+            this.InitiativeClearButton.Location = new System.Drawing.Point(681, 401);
             this.InitiativeClearButton.Name = "InitiativeClearButton";
-            this.InitiativeClearButton.Size = new System.Drawing.Size(75, 39);
+            this.InitiativeClearButton.Size = new System.Drawing.Size(168, 21);
             this.InitiativeClearButton.TabIndex = 39;
             this.InitiativeClearButton.Text = "Clear Initiative";
             this.InitiativeClearButton.UseVisualStyleBackColor = true;
@@ -562,7 +559,7 @@
             // 
             // SelectedTokenViewer
             // 
-            this.SelectedTokenViewer.Location = new System.Drawing.Point(499, 302);
+            this.SelectedTokenViewer.Location = new System.Drawing.Point(497, 251);
             this.SelectedTokenViewer.Name = "SelectedTokenViewer";
             this.SelectedTokenViewer.Size = new System.Drawing.Size(91, 86);
             this.SelectedTokenViewer.TabIndex = 40;
@@ -570,7 +567,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(514, 145);
+            this.label15.Location = new System.Drawing.Point(509, 97);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(114, 13);
             this.label15.TabIndex = 41;
@@ -579,21 +576,21 @@
             // SelectedTokenNameBox
             // 
             this.SelectedTokenNameBox.Enabled = false;
-            this.SelectedTokenNameBox.Location = new System.Drawing.Point(517, 161);
+            this.SelectedTokenNameBox.Location = new System.Drawing.Point(512, 113);
             this.SelectedTokenNameBox.Name = "SelectedTokenNameBox";
-            this.SelectedTokenNameBox.Size = new System.Drawing.Size(100, 20);
+            this.SelectedTokenNameBox.Size = new System.Drawing.Size(158, 20);
             this.SelectedTokenNameBox.TabIndex = 42;
             // 
             // SelectedTokenMaxHPNumeric
             // 
-            this.SelectedTokenMaxHPNumeric.Location = new System.Drawing.Point(517, 191);
+            this.SelectedTokenMaxHPNumeric.Location = new System.Drawing.Point(515, 140);
             this.SelectedTokenMaxHPNumeric.Name = "SelectedTokenMaxHPNumeric";
             this.SelectedTokenMaxHPNumeric.Size = new System.Drawing.Size(38, 20);
             this.SelectedTokenMaxHPNumeric.TabIndex = 43;
             // 
             // SelectedTokenCurHPNumeric
             // 
-            this.SelectedTokenCurHPNumeric.Location = new System.Drawing.Point(517, 217);
+            this.SelectedTokenCurHPNumeric.Location = new System.Drawing.Point(515, 166);
             this.SelectedTokenCurHPNumeric.Name = "SelectedTokenCurHPNumeric";
             this.SelectedTokenCurHPNumeric.Size = new System.Drawing.Size(38, 20);
             this.SelectedTokenCurHPNumeric.TabIndex = 44;
@@ -601,7 +598,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(561, 191);
+            this.label16.Location = new System.Drawing.Point(559, 140);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(42, 13);
             this.label16.TabIndex = 45;
@@ -610,7 +607,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(561, 217);
+            this.label17.Location = new System.Drawing.Point(559, 166);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(38, 13);
             this.label17.TabIndex = 46;
@@ -618,7 +615,7 @@
             // 
             // SelectedTokenInitiativeButton
             // 
-            this.SelectedTokenInitiativeButton.Location = new System.Drawing.Point(600, 243);
+            this.SelectedTokenInitiativeButton.Location = new System.Drawing.Point(598, 192);
             this.SelectedTokenInitiativeButton.Name = "SelectedTokenInitiativeButton";
             this.SelectedTokenInitiativeButton.Size = new System.Drawing.Size(75, 23);
             this.SelectedTokenInitiativeButton.TabIndex = 47;
@@ -628,7 +625,7 @@
             // 
             // SelectedTokenSetMaxHPButton
             // 
-            this.SelectedTokenSetMaxHPButton.Location = new System.Drawing.Point(600, 202);
+            this.SelectedTokenSetMaxHPButton.Location = new System.Drawing.Point(598, 151);
             this.SelectedTokenSetMaxHPButton.Name = "SelectedTokenSetMaxHPButton";
             this.SelectedTokenSetMaxHPButton.Size = new System.Drawing.Size(77, 25);
             this.SelectedTokenSetMaxHPButton.TabIndex = 48;
@@ -638,7 +635,7 @@
             // 
             // SelectedTokenLvlNumeric
             // 
-            this.SelectedTokenLvlNumeric.Location = new System.Drawing.Point(517, 243);
+            this.SelectedTokenLvlNumeric.Location = new System.Drawing.Point(515, 192);
             this.SelectedTokenLvlNumeric.Name = "SelectedTokenLvlNumeric";
             this.SelectedTokenLvlNumeric.Size = new System.Drawing.Size(38, 20);
             this.SelectedTokenLvlNumeric.TabIndex = 49;
@@ -646,7 +643,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(561, 245);
+            this.label18.Location = new System.Drawing.Point(559, 194);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(37, 13);
             this.label18.TabIndex = 50;
@@ -654,11 +651,11 @@
             // 
             // SelectedTokenRemoveButton
             // 
-            this.SelectedTokenRemoveButton.Location = new System.Drawing.Point(600, 326);
+            this.SelectedTokenRemoveButton.Location = new System.Drawing.Point(598, 251);
             this.SelectedTokenRemoveButton.Name = "SelectedTokenRemoveButton";
-            this.SelectedTokenRemoveButton.Size = new System.Drawing.Size(75, 62);
+            this.SelectedTokenRemoveButton.Size = new System.Drawing.Size(75, 74);
             this.SelectedTokenRemoveButton.TabIndex = 51;
-            this.SelectedTokenRemoveButton.Text = "Remove Selected Token";
+            this.SelectedTokenRemoveButton.Text = "Remove Selected Token from Grid";
             this.SelectedTokenRemoveButton.UseVisualStyleBackColor = true;
             this.SelectedTokenRemoveButton.Click += new System.EventHandler(this.SelectedTokenRemoveButton_Click);
             // 
@@ -683,7 +680,7 @@
             // 
             // SelectedTokenToggleNPCHostile
             // 
-            this.SelectedTokenToggleNPCHostile.Location = new System.Drawing.Point(499, 273);
+            this.SelectedTokenToggleNPCHostile.Location = new System.Drawing.Point(497, 222);
             this.SelectedTokenToggleNPCHostile.Name = "SelectedTokenToggleNPCHostile";
             this.SelectedTokenToggleNPCHostile.Size = new System.Drawing.Size(91, 23);
             this.SelectedTokenToggleNPCHostile.TabIndex = 54;
@@ -693,7 +690,7 @@
             // 
             // SelectedTokenToggleNPCSize
             // 
-            this.SelectedTokenToggleNPCSize.Location = new System.Drawing.Point(600, 273);
+            this.SelectedTokenToggleNPCSize.Location = new System.Drawing.Point(598, 222);
             this.SelectedTokenToggleNPCSize.Name = "SelectedTokenToggleNPCSize";
             this.SelectedTokenToggleNPCSize.Size = new System.Drawing.Size(75, 23);
             this.SelectedTokenToggleNPCSize.TabIndex = 55;
@@ -703,7 +700,7 @@
             // 
             // SelectedTokenChangeTokenImgButton
             // 
-            this.SelectedTokenChangeTokenImgButton.Location = new System.Drawing.Point(499, 394);
+            this.SelectedTokenChangeTokenImgButton.Location = new System.Drawing.Point(497, 343);
             this.SelectedTokenChangeTokenImgButton.Name = "SelectedTokenChangeTokenImgButton";
             this.SelectedTokenChangeTokenImgButton.Size = new System.Drawing.Size(99, 37);
             this.SelectedTokenChangeTokenImgButton.TabIndex = 56;
@@ -711,18 +708,22 @@
             this.SelectedTokenChangeTokenImgButton.UseVisualStyleBackColor = true;
             this.SelectedTokenChangeTokenImgButton.Click += new System.EventHandler(this.SelectedTokenChangeTokenImgButton_Click);
             // 
-            // CreatureLvlNumeric
+            // SelectedTokenRemoveIntButton
             // 
-            this.CreatureLvlNumeric.Location = new System.Drawing.Point(78, 105);
-            this.CreatureLvlNumeric.Name = "CreatureLvlNumeric";
-            this.CreatureLvlNumeric.Size = new System.Drawing.Size(56, 20);
-            this.CreatureLvlNumeric.TabIndex = 42;
+            this.SelectedTokenRemoveIntButton.Location = new System.Drawing.Point(600, 331);
+            this.SelectedTokenRemoveIntButton.Name = "SelectedTokenRemoveIntButton";
+            this.SelectedTokenRemoveIntButton.Size = new System.Drawing.Size(75, 74);
+            this.SelectedTokenRemoveIntButton.TabIndex = 57;
+            this.SelectedTokenRemoveIntButton.Text = "Remove Selected Token from Initiative";
+            this.SelectedTokenRemoveIntButton.UseVisualStyleBackColor = true;
+            this.SelectedTokenRemoveIntButton.Click += new System.EventHandler(this.SelectedTokenRemoveIntButton_Click);
             // 
             // DnLiteAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 468);
+            this.Controls.Add(this.SelectedTokenRemoveIntButton);
             this.Controls.Add(this.SelectedTokenChangeTokenImgButton);
             this.Controls.Add(this.SelectedTokenToggleNPCSize);
             this.Controls.Add(this.SelectedTokenToggleNPCHostile);
@@ -741,7 +742,6 @@
             this.Controls.Add(this.label15);
             this.Controls.Add(this.SelectedTokenViewer);
             this.Controls.Add(this.InitiativeClearButton);
-            this.Controls.Add(this.InitiativeTestButton);
             this.Controls.Add(this.SetGridButton);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.GridColumNumeric);
@@ -760,6 +760,7 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.CreatureLvlNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreatureACNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreatureHPNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DecoWideNumeric)).EndInit();
@@ -769,7 +770,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenMaxHPNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenCurHPNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenLvlNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CreatureLvlNumeric)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -816,7 +816,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.NumericUpDown GridRowNumeric;
         private System.Windows.Forms.Button SetGridButton;
-        private System.Windows.Forms.Button InitiativeTestButton;
         private System.Windows.Forms.Button InitiativeClearButton;
         private System.Windows.Forms.Panel SelectedTokenViewer;
         private System.Windows.Forms.Label label15;
@@ -841,5 +840,6 @@
         private System.Windows.Forms.Button SelectedTokenToggleNPCSize;
         private System.Windows.Forms.Button SelectedTokenChangeTokenImgButton;
         private System.Windows.Forms.NumericUpDown CreatureLvlNumeric;
+        private System.Windows.Forms.Button SelectedTokenRemoveIntButton;
     }
 }

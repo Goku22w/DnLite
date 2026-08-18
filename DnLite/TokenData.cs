@@ -13,6 +13,9 @@ namespace DnLite
         public bool IsHostile { get; set; }
         public bool IsLarge { get; set; }
 
+        // Store the unique initiative name (with numbering if needed, e.g., "Goblin -1-")
+        public string InitiativeName { get; set; }
+
         // Store the base color (not affected by size/hostility modifiers) as ARGB int for JSON serialization
         public int BaseColorArgb { get; set; }
 
