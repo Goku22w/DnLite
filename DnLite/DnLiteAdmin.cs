@@ -452,6 +452,7 @@ namespace DnLite
             SelectedTokenMaxHPNumeric.Maximum = Math.Max(1000, SelectedTokenMaxHPNumeric.Maximum);
             SelectedTokenCurHPNumeric.Maximum = Math.Max(1000, SelectedTokenCurHPNumeric.Maximum);
             SelectedTokenLvlNumeric.Maximum = Math.Max(1000, SelectedTokenLvlNumeric.Maximum);
+            SelectedTokenACNumeric.Maximum = Math.Max(1000, SelectedTokenACNumeric.Maximum);
 
             // Name and HP from TokenData if available
             if (token.Tag is TokenData td)
@@ -460,6 +461,7 @@ namespace DnLite
                 SelectedTokenMaxHPNumeric.Value = td.MaxHP;
                 SelectedTokenCurHPNumeric.Value = td.CurHP;
                 SelectedTokenLvlNumeric.Value = td.Lvl;
+                SelectedTokenACNumeric.Value = td.AC;
 
                 // Disable hostile toggle for player characters
                 SelectedTokenToggleNPCHostile.Enabled = !td.IsPlayer;
@@ -471,6 +473,7 @@ namespace DnLite
                 SelectedTokenMaxHPNumeric.Value = Math.Max(SelectedTokenMaxHPNumeric.Minimum, Math.Min(SelectedTokenMaxHPNumeric.Maximum, 1));
                 SelectedTokenCurHPNumeric.Value = Math.Max(SelectedTokenCurHPNumeric.Minimum, Math.Min(SelectedTokenCurHPNumeric.Maximum, 1));
                 SelectedTokenLvlNumeric.Value = Math.Max(SelectedTokenLvlNumeric.Minimum, Math.Min(SelectedTokenLvlNumeric.Maximum, 0));
+                SelectedTokenACNumeric.Value = Math.Max(SelectedTokenACNumeric.Minimum, Math.Min(SelectedTokenACNumeric.Maximum, 10));
 
                 // Enable both buttons for tokens without TokenData (assumed to be NPCs)
                 SelectedTokenToggleNPCHostile.Enabled = true;
@@ -505,10 +508,11 @@ namespace DnLite
             int maxHP = (int)SelectedTokenMaxHPNumeric.Value;
             int curHP = (int)SelectedTokenCurHPNumeric.Value;
             int lvl = (int)SelectedTokenLvlNumeric.Value;
+            int ac = (int)SelectedTokenACNumeric.Value;
 
             TokenData td = selectedToken.Tag as TokenData;
-            if (td == null) td = new TokenData(name, maxHP, curHP, lvl);
-            else { td.Name = name; td.MaxHP = maxHP; td.CurHP = curHP; td.Lvl = lvl; }
+            if (td == null) td = new TokenData(name, maxHP, curHP, lvl, ac);
+            else { td.Name = name; td.MaxHP = maxHP; td.CurHP = curHP; td.Lvl = lvl; td.AC = ac; }
 
             selectedToken.Tag = td;
 

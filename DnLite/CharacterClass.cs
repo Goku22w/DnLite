@@ -17,8 +17,9 @@ namespace CharacterClass
         public int Lvl { get; set; }
         public string ImgFileLocation { get; set; }
         public bool isLarge { get; set; }
+        public int AC { get; set; } = 12; // Default AC value
 
-        public Character(string Name, string Class, string Description, char Token, int MaxHP, int CurHP, int Lvl, string ImgFileLocation = "", bool isLarge = false)
+        public Character(string Name, string Class, string Description, char Token, int MaxHP, int CurHP, int Lvl, string ImgFileLocation = "", bool isLarge = false, int AC = 12)
         {
             this.Name = Name;
             this.Class = Class;
@@ -29,6 +30,7 @@ namespace CharacterClass
             this.Lvl = Lvl;
             this.ImgFileLocation = ImgFileLocation;
             this.isLarge = isLarge;
+            this.AC = AC + Lvl;
         }
     }
 }

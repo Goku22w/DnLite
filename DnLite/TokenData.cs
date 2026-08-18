@@ -9,6 +9,7 @@ namespace DnLite
         public int MaxHP { get; set; }
         public int CurHP { get; set; }
         public int Lvl { get; set; }
+        public int AC { get; set; }
         public bool IsPlayer { get; set; }
         public bool IsHostile { get; set; }
         public bool IsLarge { get; set; }
@@ -20,12 +21,13 @@ namespace DnLite
         public int BaseColorArgb { get; set; }
 
         public TokenData() { }
-        public TokenData(string name, int maxHP, int curHP, int lvl = 0, bool isPlayer = false, bool isHostile = false, bool isLarge = false, Color? baseColor = null)
+        public TokenData(string name, int maxHP, int curHP, int lvl = 0, int ac = 10, bool isPlayer = false, bool isHostile = false, bool isLarge = false, Color? baseColor = null)
         {
             Name = name;
             MaxHP = maxHP;
             CurHP = curHP;
             Lvl = lvl;
+            AC = ac;
             IsPlayer = isPlayer;
             IsHostile = isHostile;
             IsLarge = isLarge;

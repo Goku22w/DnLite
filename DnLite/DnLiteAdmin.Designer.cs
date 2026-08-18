@@ -92,6 +92,8 @@
             this.SelectedTokenToggleNPCSize = new System.Windows.Forms.Button();
             this.SelectedTokenChangeTokenImgButton = new System.Windows.Forms.Button();
             this.SelectedTokenRemoveIntButton = new System.Windows.Forms.Button();
+            this.label20 = new System.Windows.Forms.Label();
+            this.SelectedTokenACNumeric = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -106,6 +108,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenMaxHPNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenCurHPNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenLvlNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenACNumeric)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -559,7 +562,7 @@
             // 
             // SelectedTokenViewer
             // 
-            this.SelectedTokenViewer.Location = new System.Drawing.Point(497, 251);
+            this.SelectedTokenViewer.Location = new System.Drawing.Point(497, 276);
             this.SelectedTokenViewer.Name = "SelectedTokenViewer";
             this.SelectedTokenViewer.Size = new System.Drawing.Size(91, 86);
             this.SelectedTokenViewer.TabIndex = 40;
@@ -625,11 +628,11 @@
             // 
             // SelectedTokenSetMaxHPButton
             // 
-            this.SelectedTokenSetMaxHPButton.Location = new System.Drawing.Point(598, 151);
+            this.SelectedTokenSetMaxHPButton.Location = new System.Drawing.Point(598, 140);
             this.SelectedTokenSetMaxHPButton.Name = "SelectedTokenSetMaxHPButton";
-            this.SelectedTokenSetMaxHPButton.Size = new System.Drawing.Size(77, 25);
+            this.SelectedTokenSetMaxHPButton.Size = new System.Drawing.Size(77, 46);
             this.SelectedTokenSetMaxHPButton.TabIndex = 48;
-            this.SelectedTokenSetMaxHPButton.Text = "Set HP/Lvl";
+            this.SelectedTokenSetMaxHPButton.Text = "Set Token Stats";
             this.SelectedTokenSetMaxHPButton.UseVisualStyleBackColor = true;
             this.SelectedTokenSetMaxHPButton.Click += new System.EventHandler(this.SelectedTokenSetMaxHPButton_Click);
             // 
@@ -680,7 +683,7 @@
             // 
             // SelectedTokenToggleNPCHostile
             // 
-            this.SelectedTokenToggleNPCHostile.Location = new System.Drawing.Point(497, 222);
+            this.SelectedTokenToggleNPCHostile.Location = new System.Drawing.Point(497, 247);
             this.SelectedTokenToggleNPCHostile.Name = "SelectedTokenToggleNPCHostile";
             this.SelectedTokenToggleNPCHostile.Size = new System.Drawing.Size(91, 23);
             this.SelectedTokenToggleNPCHostile.TabIndex = 54;
@@ -700,7 +703,7 @@
             // 
             // SelectedTokenChangeTokenImgButton
             // 
-            this.SelectedTokenChangeTokenImgButton.Location = new System.Drawing.Point(497, 343);
+            this.SelectedTokenChangeTokenImgButton.Location = new System.Drawing.Point(497, 368);
             this.SelectedTokenChangeTokenImgButton.Name = "SelectedTokenChangeTokenImgButton";
             this.SelectedTokenChangeTokenImgButton.Size = new System.Drawing.Size(99, 37);
             this.SelectedTokenChangeTokenImgButton.TabIndex = 56;
@@ -718,11 +721,29 @@
             this.SelectedTokenRemoveIntButton.UseVisualStyleBackColor = true;
             this.SelectedTokenRemoveIntButton.Click += new System.EventHandler(this.SelectedTokenRemoveIntButton_Click);
             // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(559, 220);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(37, 13);
+            this.label20.TabIndex = 59;
+            this.label20.Text = "CurAC";
+            // 
+            // SelectedTokenACNumeric
+            // 
+            this.SelectedTokenACNumeric.Location = new System.Drawing.Point(515, 218);
+            this.SelectedTokenACNumeric.Name = "SelectedTokenACNumeric";
+            this.SelectedTokenACNumeric.Size = new System.Drawing.Size(38, 20);
+            this.SelectedTokenACNumeric.TabIndex = 58;
+            // 
             // DnLiteAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 468);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.SelectedTokenACNumeric);
             this.Controls.Add(this.SelectedTokenRemoveIntButton);
             this.Controls.Add(this.SelectedTokenChangeTokenImgButton);
             this.Controls.Add(this.SelectedTokenToggleNPCSize);
@@ -770,6 +791,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenMaxHPNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenCurHPNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenLvlNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenACNumeric)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -841,5 +863,7 @@
         private System.Windows.Forms.Button SelectedTokenChangeTokenImgButton;
         private System.Windows.Forms.NumericUpDown CreatureLvlNumeric;
         private System.Windows.Forms.Button SelectedTokenRemoveIntButton;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.NumericUpDown SelectedTokenACNumeric;
     }
 }

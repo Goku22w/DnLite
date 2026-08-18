@@ -109,7 +109,7 @@ namespace DnLite
                     int gridW = newCharacter.isLarge ? 2 : 1;
                     int gridH = newCharacter.isLarge ? 2 : 1;
 
-                    var td = new TokenData(newCharacter.Name ?? string.Empty, newCharacter.MaxHP, newCharacter.CurHP, newCharacter.Lvl, isPlayer: true, isHostile: false, isLarge: newCharacter.isLarge, baseColor: baseColor);
+                    var td = new TokenData(newCharacter.Name ?? string.Empty, newCharacter.MaxHP, newCharacter.CurHP, newCharacter.Lvl, newCharacter.AC, isPlayer: true, isHostile: false, isLarge: newCharacter.isLarge, baseColor: baseColor);
                     parentDisplay.AddPaletteTokenToAdmin(tokenChar, displayColor, td, gridW, gridH, newCharacter.ImgFileLocation ?? "");
                 }
             }
@@ -187,7 +187,9 @@ namespace DnLite
             else if (cls.Contains("caster")) baseColor = Color.LightGreen;
 
             // Add this token to the admin palette via the display
-            var td = new TokenData(CharacterNameText.Text ?? string.Empty, 3, 3, (int)CharacterLvlNumeric.Value, isPlayer: true, isHostile: false, isLarge: false, baseColor: baseColor);
+            int characterLevel = (int)CharacterLvlNumeric.Value;
+            int characterAC = 12 + characterLevel; // Default AC is 12 + level
+            var td = new TokenData(CharacterNameText.Text ?? string.Empty, 3, 3, characterLevel, characterAC, isPlayer: true, isHostile: false, isLarge: false, baseColor: baseColor);
             parentDisplay.AddPaletteTokenToAdmin(tokenChar, baseColor, td, 1, 1, CharacterImgFileLocationText.Text);
         }
 
