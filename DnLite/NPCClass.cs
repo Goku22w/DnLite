@@ -24,10 +24,10 @@ namespace NPCClass
             this.Name = Name;
             this.Description = Description;
             this.Token = Token;
-            this.MaxHP = MaxHP;
-            this.CurHP = CurHP;
+            this.MaxHP = MaxHP + Lvl;
+            this.CurHP = CurHP + Lvl;
             this.Lvl = Lvl;
-            this.AC = AC;
+            this.AC = AC + Lvl;
             this.IsHostile = IsHostile;
             this.IsLarge = IsLarge;
             this.ImgFileLocation = ImgFileLocation;

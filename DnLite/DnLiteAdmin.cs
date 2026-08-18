@@ -414,8 +414,9 @@ namespace DnLite
             // Create TokenData for this creature so the admin can show HP/name when placed
             // Get level from the numeric control
             int lvl = (int)CreatureLvlNumeric.Value;
+            int ac = (int)CreatureACNumeric.Value;
 
-            var td = new TokenData(CreatureNameText.Text ?? string.Empty, (int)CreatureHPNumeric.Value, (int)CreatureHPNumeric.Value, lvl, isPlayer: false, isHostile: CreatureHostileCheck.Checked, isLarge: CreatureSizeCheck.Checked, baseColor: baseColor);
+            var td = new TokenData(CreatureNameText.Text ?? string.Empty, (int)CreatureHPNumeric.Value, (int)CreatureHPNumeric.Value, lvl, ac, isPlayer: false, isHostile: CreatureHostileCheck.Checked, isLarge: CreatureSizeCheck.Checked, baseColor: baseColor);
 
             // Add new palette token inside admin's palette
             CreatePaletteTokenWithDataInAdmin(tokenChar, displayColor, td, gridW, gridH, CreatureImgFileLocationText.Text);
