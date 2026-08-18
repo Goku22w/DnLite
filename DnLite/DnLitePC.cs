@@ -88,6 +88,7 @@ namespace DnLite
             CharacterDescRichText.Text = newCharacter.Description;
             CharacterTokenLetter.Text = newCharacter.Token.ToString();
             CharacterImgFileLocationText.Text = newCharacter.ImgFileLocation ?? "";
+            CharacterLvlNumeric.Value = newCharacter.Lvl;
 
             // Also create a palette token with the loaded character's data so it can be placed on the grid
             try
@@ -154,7 +155,7 @@ namespace DnLite
 
         private void SaveCharacterButton_Click(object sender, EventArgs e)
         {
-            SaveCharacter(CharacterNameText.Text, CharacterClassCombo.Text, CharacterDescRichText.Text, CharacterTokenLetter.Text[0], 3, 3, 0, CharacterImgFileLocationText.Text);
+            SaveCharacter(CharacterNameText.Text, CharacterClassCombo.Text, CharacterDescRichText.Text, CharacterTokenLetter.Text[0], 3, 3, (int)CharacterLvlNumeric.Value, CharacterImgFileLocationText.Text);
         }
 
         private void LoadCharacterButton_Click(object sender, EventArgs e)
@@ -186,7 +187,7 @@ namespace DnLite
             else if (cls.Contains("caster")) baseColor = Color.LightGreen;
 
             // Add this token to the admin palette via the display
-            var td = new TokenData(CharacterNameText.Text ?? string.Empty, 3, 3, 0, isPlayer: true, isHostile: false, isLarge: false, baseColor: baseColor);
+            var td = new TokenData(CharacterNameText.Text ?? string.Empty, 3, 3, (int)CharacterLvlNumeric.Value, isPlayer: true, isHostile: false, isLarge: false, baseColor: baseColor);
             parentDisplay.AddPaletteTokenToAdmin(tokenChar, baseColor, td, 1, 1, CharacterImgFileLocationText.Text);
         }
 
@@ -197,6 +198,7 @@ namespace DnLite
             CharacterDescRichText.Text = string.Empty;
             CharacterTokenLetter.Text = string.Empty;
             CharacterImgFileLocationText.Text = string.Empty;
+            CharacterLvlNumeric.Value = 0;
         }
 
         private void CharacterFindImgButton_Click(object sender, EventArgs e)

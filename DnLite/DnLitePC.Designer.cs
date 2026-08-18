@@ -43,6 +43,9 @@
             this.CharacterImgFileLocationText = new System.Windows.Forms.TextBox();
             this.CharacterFindImgButton = new System.Windows.Forms.Button();
             this.CharacterClearImgFileLocation = new System.Windows.Forms.Button();
+            this.CharacterLvlNumeric = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.CharacterLvlNumeric)).BeginInit();
             this.SuspendLayout();
             // 
             // CharacterNameText
@@ -85,7 +88,7 @@
             // 
             // CharacterDescRichText
             // 
-            this.CharacterDescRichText.Location = new System.Drawing.Point(15, 163);
+            this.CharacterDescRichText.Location = new System.Drawing.Point(15, 189);
             this.CharacterDescRichText.Name = "CharacterDescRichText";
             this.CharacterDescRichText.Size = new System.Drawing.Size(212, 96);
             this.CharacterDescRichText.TabIndex = 4;
@@ -94,7 +97,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 147);
+            this.label3.Location = new System.Drawing.Point(12, 173);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(121, 13);
             this.label3.TabIndex = 5;
@@ -102,7 +105,7 @@
             // 
             // CreateCharacterButton
             // 
-            this.CreateCharacterButton.Location = new System.Drawing.Point(15, 268);
+            this.CreateCharacterButton.Location = new System.Drawing.Point(15, 294);
             this.CreateCharacterButton.Name = "CreateCharacterButton";
             this.CreateCharacterButton.Size = new System.Drawing.Size(104, 23);
             this.CreateCharacterButton.TabIndex = 6;
@@ -112,7 +115,7 @@
             // 
             // ClearCharacterButton
             // 
-            this.ClearCharacterButton.Location = new System.Drawing.Point(152, 268);
+            this.ClearCharacterButton.Location = new System.Drawing.Point(152, 294);
             this.ClearCharacterButton.Name = "ClearCharacterButton";
             this.ClearCharacterButton.Size = new System.Drawing.Size(75, 23);
             this.ClearCharacterButton.TabIndex = 7;
@@ -138,7 +141,7 @@
             // 
             // SaveCharacterButton
             // 
-            this.SaveCharacterButton.Location = new System.Drawing.Point(15, 297);
+            this.SaveCharacterButton.Location = new System.Drawing.Point(15, 323);
             this.SaveCharacterButton.Name = "SaveCharacterButton";
             this.SaveCharacterButton.Size = new System.Drawing.Size(102, 23);
             this.SaveCharacterButton.TabIndex = 10;
@@ -148,7 +151,7 @@
             // 
             // LoadCharacterButton
             // 
-            this.LoadCharacterButton.Location = new System.Drawing.Point(125, 297);
+            this.LoadCharacterButton.Location = new System.Drawing.Point(125, 323);
             this.LoadCharacterButton.Name = "LoadCharacterButton";
             this.LoadCharacterButton.Size = new System.Drawing.Size(102, 23);
             this.LoadCharacterButton.TabIndex = 11;
@@ -159,14 +162,14 @@
             // CharacterImgFileLocationText
             // 
             this.CharacterImgFileLocationText.Enabled = false;
-            this.CharacterImgFileLocationText.Location = new System.Drawing.Point(15, 91);
+            this.CharacterImgFileLocationText.Location = new System.Drawing.Point(15, 117);
             this.CharacterImgFileLocationText.Name = "CharacterImgFileLocationText";
             this.CharacterImgFileLocationText.Size = new System.Drawing.Size(212, 20);
             this.CharacterImgFileLocationText.TabIndex = 12;
             // 
             // CharacterFindImgButton
             // 
-            this.CharacterFindImgButton.Location = new System.Drawing.Point(15, 117);
+            this.CharacterFindImgButton.Location = new System.Drawing.Point(15, 143);
             this.CharacterFindImgButton.Name = "CharacterFindImgButton";
             this.CharacterFindImgButton.Size = new System.Drawing.Size(104, 23);
             this.CharacterFindImgButton.TabIndex = 13;
@@ -176,7 +179,7 @@
             // 
             // CharacterClearImgFileLocation
             // 
-            this.CharacterClearImgFileLocation.Location = new System.Drawing.Point(145, 117);
+            this.CharacterClearImgFileLocation.Location = new System.Drawing.Point(145, 143);
             this.CharacterClearImgFileLocation.Name = "CharacterClearImgFileLocation";
             this.CharacterClearImgFileLocation.Size = new System.Drawing.Size(81, 23);
             this.CharacterClearImgFileLocation.TabIndex = 14;
@@ -184,11 +187,29 @@
             this.CharacterClearImgFileLocation.UseVisualStyleBackColor = true;
             this.CharacterClearImgFileLocation.Click += new System.EventHandler(this.CharacterClearImgFileLocation_Click);
             // 
+            // CharacterLvlNumeric
+            // 
+            this.CharacterLvlNumeric.Location = new System.Drawing.Point(15, 91);
+            this.CharacterLvlNumeric.Name = "CharacterLvlNumeric";
+            this.CharacterLvlNumeric.Size = new System.Drawing.Size(56, 20);
+            this.CharacterLvlNumeric.TabIndex = 15;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(77, 93);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(115, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Select Character Level";
+            // 
             // DnLitePC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(248, 332);
+            this.ClientSize = new System.Drawing.Size(248, 357);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.CharacterLvlNumeric);
             this.Controls.Add(this.CharacterClearImgFileLocation);
             this.Controls.Add(this.CharacterFindImgButton);
             this.Controls.Add(this.CharacterImgFileLocationText);
@@ -209,6 +230,7 @@
             this.Name = "DnLitePC";
             this.Text = "DnLite Player Creator";
             this.Load += new System.EventHandler(this.DnLitePC_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.CharacterLvlNumeric)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,5 +253,7 @@
         private System.Windows.Forms.TextBox CharacterImgFileLocationText;
         private System.Windows.Forms.Button CharacterFindImgButton;
         private System.Windows.Forms.Button CharacterClearImgFileLocation;
+        private System.Windows.Forms.NumericUpDown CharacterLvlNumeric;
+        private System.Windows.Forms.Label label1;
     }
 }
