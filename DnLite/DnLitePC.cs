@@ -16,7 +16,6 @@ namespace DnLite
     public partial class DnLitePC : Form
     {
         private DnLiteDisplay parentDisplay;
-        private DnLiteAdmin parentAdmin;
 
         public DnLitePC(DnLiteDisplay display)
         {

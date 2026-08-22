@@ -520,9 +520,19 @@
             // GridColumNumeric
             // 
             this.GridColumNumeric.Location = new System.Drawing.Point(591, 38);
+            this.GridColumNumeric.Maximum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
             this.GridColumNumeric.Name = "GridColumNumeric";
             this.GridColumNumeric.Size = new System.Drawing.Size(37, 20);
             this.GridColumNumeric.TabIndex = 35;
+            this.GridColumNumeric.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
             // 
             // label14
             // 
@@ -536,9 +546,19 @@
             // GridRowNumeric
             // 
             this.GridRowNumeric.Location = new System.Drawing.Point(512, 38);
+            this.GridRowNumeric.Maximum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
             this.GridRowNumeric.Name = "GridRowNumeric";
             this.GridRowNumeric.Size = new System.Drawing.Size(37, 20);
             this.GridRowNumeric.TabIndex = 33;
+            this.GridRowNumeric.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
             // 
             // SetGridButton
             // 

@@ -14,7 +14,7 @@ namespace DnLite
         private bool _isAnimatedGif;
         private MemoryStream _imageStream; // Keep the stream alive for GIFs
 
-        public string ImagePath
+        public new string ImagePath
         {
             get => _imagePath;
             set

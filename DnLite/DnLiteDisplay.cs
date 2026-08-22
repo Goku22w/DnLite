@@ -17,8 +17,10 @@ namespace DnLite
     public partial class DnLiteDisplay : Form
     {
         private DnLiteAdmin adminForm;
-        private DnLiteDice diceFormInstance;
         private TokenControl currentSelectedToken;
+        private DodecahedronControl dodecaControl;
+        public int? LastRoll { get; private set; }
+        public event Action<int> RollCompleted;
 
         public DnLiteDisplay()
         {
@@ -92,6 +94,55 @@ namespace DnLite
             return baseName;
         }
 
+        // Generate a unique name for tokens on the grid by adding numbering (-1-, -2-, etc.) if duplicates exist
+        public string GetUniqueTokenName(string baseName)
+        {
+            if (string.IsNullOrEmpty(baseName)) return baseName;
+
+            // Check if this exact name already exists in tokens on the grid
+            bool baseNameExists = false;
+            int highestNumber = 0;
+
+            foreach (Control control in gridPanel.Controls)
+            {
+                if (control is TokenControl token && token.Tag is TokenData td)
+                {
+                    string tokenName = td.Name;
+                    if (string.IsNullOrEmpty(tokenName)) continue;
+
+                    // Check if it matches the base name exactly
+                    if (tokenName.Equals(baseName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        baseNameExists = true;
+                    }
+                    // Check if it matches the base name with a number suffix (e.g., "Name -1-")
+                    else if (tokenName.StartsWith(baseName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Try to extract the number from the suffix
+                        string suffix = tokenName.Substring(baseName.Length).Trim();
+                        if (suffix.StartsWith("-") && suffix.EndsWith("-"))
+                        {
+                            string numberPart = suffix.Trim('-');
+                            if (int.TryParse(numberPart, out int number))
+                            {
+                                highestNumber = Math.Max(highestNumber, number);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // If the base name exists, we need to add numbering
+            if (baseNameExists || highestNumber > 0)
+            {
+                // Return the base name with the next available number
+                return $"{baseName} -{highestNumber + 1}-";
+            }
+
+            // No duplicates found, return the original name
+            return baseName;
+        }
+
         // Sort the initiative list entries (expects entries start with a numeric roll)
         public void SortInitiativeList()
         {
@@ -116,12 +167,93 @@ namespace DnLite
             UpdateGridDimensions(blockWidth, blockHeight); //Initialize the grid panel boundaries on load
             DnLitePC pcForm = new DnLitePC(this);
             adminForm = new DnLiteAdmin(this);
-            // No-op touch: added a harmless comment to mark file as edited before adding menu hook
-            DnLiteDice diceForm = new DnLiteDice(this);
             pcForm.Show();
             adminForm.Show(); //Create and show the other forms on load
-            diceForm.Show();
             this.Focus(); //Ensure the display form is focused after showing the other forms
+            DiceRollOutputLabel.Text = "0";
+        }
+
+        private void RoleDieButton_Click(object sender, EventArgs e)
+        {
+            // Disable button to prevent re-entry
+            RoleDieButton.Enabled = false;
+
+            // Create dodecahedron animation control and add to DiceDisplayPanel
+            try
+            {
+                if (dodecaControl == null)
+                {
+                    // Place in the DiceDisplayPanel
+                    dodecaControl = new DodecahedronControl()
+                    {
+                        Location = new System.Drawing.Point(0, 0),
+                        Size = new System.Drawing.Size(DiceDisplayPanel.ClientSize.Width, DiceDisplayPanel.ClientSize.Height),
+                        Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom
+                    };
+                    DiceDisplayPanel.Controls.Add(dodecaControl);
+                    dodecaControl.BringToFront();
+                }
+
+                // ensure we don't add multiple handlers
+                dodecaControl.RollCompleted -= OnRollCompleted;
+                dodecaControl.RollCompleted += OnRollCompleted;
+                // Start with faster spin: fewer frames and higher speed multiplier
+                dodecaControl.StartAnimation(60, 3.5f);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to start dodecahedron animation: {ex.Message}");
+                RoleDieButton.Enabled = true;
+            }
+        }
+
+        private void OnRollCompleted(int roll)
+        {
+            // Unsubscribe to avoid repeated calls
+            if (dodecaControl != null) dodecaControl.RollCompleted -= OnRollCompleted;
+
+            // Get level modifier from selected token
+            int levelModifier = 0;
+            string tokenInfo = "";
+            if (CurrentSelectedToken != null)
+            {
+                if (CurrentSelectedToken.Tag is TokenData tokenData)
+                {
+                    levelModifier = tokenData.Lvl;
+                    tokenInfo = $" ({tokenData.Name ?? CurrentSelectedToken.Letter.ToString()})";
+                }
+            }
+
+            int totalRoll = roll + levelModifier;
+            LastRoll = totalRoll;
+
+            // Update UI label inside this form instead of MessageBox and do not close the form
+            try
+            {
+                if (this.InvokeRequired)
+                {
+                    this.BeginInvoke((Action)(() => OnRollCompleted(roll)));
+                    return;
+                }
+                // show result in DiceRollOutputLabel with modifier breakdown
+                try
+                {
+                    if (levelModifier > 0)
+                    {
+                        DiceRollOutputLabel.Text = $"{roll} +{levelModifier}";
+                    }
+                    else
+                    {
+                        DiceRollOutputLabel.Text = roll.ToString();
+                    }
+                }
+                catch { }
+                // re-enable roll button
+                try { RoleDieButton.Enabled = true; } catch { }
+                // raise external event so other forms can react
+                RollCompleted?.Invoke(totalRoll);
+            }
+            catch { }
         }
 
         // Forward request to add a palette token into the admin palette
@@ -135,9 +267,8 @@ namespace DnLite
         }
 
         //Grid dimensions defined by total number of block columns and rows
-        #pragma warning disable IDE0044 //Disable warning for fields that could be made readonly, as we want to allow dynamic resizing of the grid
         private int blockWidth = 8;
-        private int blockHeight = 10;
+        private int blockHeight = 8;
 
 
         public const int CellSize = 75; //Fixed pixel size for each square grid cell
@@ -149,9 +280,13 @@ namespace DnLite
             
         public void UpdateGridDimensions(int newHeightInBlocks, int newWidthInBlocks) //functionality for setting the grid dynamically from the admin form
         {
+            //Update the block dimensions
+            blockWidth = newWidthInBlocks;
+            blockHeight = newHeightInBlocks;
+
             //Dynamically resize the panel based on the block counts
-            gridPanel.Width = newWidthInBlocks * CellSize;
-            gridPanel.Height = newHeightInBlocks * CellSize;
+            gridPanel.Width = blockWidth * CellSize;
+            gridPanel.Height = blockHeight * CellSize;
 
             gridPanel.Invalidate(); //Force the panel to redraw its gridlines
             foreach (Control token in gridPanel.Controls) //Check if any existing tokens are now out of bounds and push them back in
@@ -216,27 +351,52 @@ namespace DnLite
                 }
                 else
                 {
-                    TokenControl paletteToken = src as TokenControl;
-                    int gw = 1, gh = 1;
-                    if (paletteToken != null)
+                    if (src is TokenControl paletteToken)
                     {
-                        gw = Math.Max(1, paletteToken.GridWidth);
-                        gh = Math.Max(1, paletteToken.GridHeight);
-                    }
+                        int gw = Math.Max(1, paletteToken.GridWidth);
+                        int gh = Math.Max(1, paletteToken.GridHeight);
 
-                    TokenControl newToken = CreateToken(paletteToken?.Letter ?? '\0', paletteToken?.FillColor ?? Color.Gray, gridX, gridY, gw, gh, paletteToken?.ImagePath ?? "");
-                    // propagate metadata (TokenData or other tag) from the palette token to the placed token
-                    if (paletteToken != null && paletteToken.Tag != null)
+                        TokenControl newToken = CreateToken(paletteToken.Letter, paletteToken.FillColor, gridX, gridY, gw, gh, paletteToken.ImagePath);
+
+                        // Clone TokenData if present and apply unique naming
+                        if (paletteToken.Tag is TokenData sourceData)
+                        {
+                            // Clone the TokenData to give this token its own independent copy
+                            TokenData clonedData = sourceData.Clone();
+
+                            // Generate a unique name for this token based on existing tokens on the grid
+                            if (!string.IsNullOrEmpty(clonedData.Name))
+                            {
+                                clonedData.Name = GetUniqueTokenName(clonedData.Name);
+                            }
+
+                            newToken.Tag = clonedData;
+                        }
+                        else if (paletteToken.Tag != null)
+                        {
+                            // For non-TokenData tags, just copy the reference as before
+                            newToken.Tag = paletteToken.Tag;
+                        }
+
+                        // Start dragging the newly created token
+                        isDragging = true;
+                        dragStartMousePos = Cursor.Position;
+                        dragStartControlPos = newToken.Location;
+                        newToken.BringToFront();
+                        newToken.Capture = true;
+                    }
+                    else
                     {
-                        newToken.Tag = paletteToken.Tag;
-                    }
+                        // Fallback for non-TokenControl types
+                        TokenControl newToken = CreateToken('\0', Color.Gray, gridX, gridY, 1, 1, "");
 
-                    // Start dragging the newly created token
-                    isDragging = true;
-                    dragStartMousePos = Cursor.Position;
-                    dragStartControlPos = newToken.Location;
-                    newToken.BringToFront();
-                    newToken.Capture = true;
+                        // Start dragging the newly created token
+                        isDragging = true;
+                        dragStartMousePos = Cursor.Position;
+                        dragStartControlPos = newToken.Location;
+                        newToken.BringToFront();
+                        newToken.Capture = true;
+                    }
                 }
             }
             else
@@ -363,22 +523,6 @@ namespace DnLite
             return deco;
         }
 
-        // Palette functions moved to DnLiteAdmin; display no longer hosts a palette panel.
-
-        //public void TestInitiativeFunc(int count)
-        //{
-        //    Random randomNumber = new Random(); //Roll Dice functionality
-        //    for (int i = 0; i < count; i++) //randomly fill the initiative list with the given number of NPCs
-        //    {
-        //        InitiativeList.Items.Add(randomNumber.Next(1, 21).ToString() + " Initiative | NPC " + (i + 1).ToString());
-        //    }
-        //    var sortedItems = InitiativeList.Items.Cast<string>()
-        //                        .OrderByDescending(x => int.Parse(x.Split(' ')[0]))
-        //                        .ToArray();
-        //    InitiativeList.Items.Clear();
-        //    InitiativeList.Items.AddRange(sortedItems); //sorts the initiative list in descending order
-        //} no longer need test function, as the admin form can add NPCs to the initiative list directly
-
         public void RemoveSelectedInitiativeFunc(string tokenName)
         {
             if (string.IsNullOrEmpty(tokenName)) return;
@@ -468,16 +612,6 @@ namespace DnLite
         private void GridEmptyButton_Click(object sender, EventArgs e)
         {
             ClearGridTokens();
-        }
-
-        private void SummonDiceButton_Click(object sender, EventArgs e)
-        {
-            if (diceFormInstance == null || diceFormInstance.IsDisposed)
-            {
-                diceFormInstance = new DnLiteDice(this);
-            }
-            diceFormInstance.Show();
-            diceFormInstance.BringToFront();
         }
     }
 }

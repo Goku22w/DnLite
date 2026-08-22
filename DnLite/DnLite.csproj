@@ -126,12 +126,6 @@
     <Compile Include="DnLiteAdmin.Designer.cs">
       <DependentUpon>DnLiteAdmin.cs</DependentUpon>
     </Compile>
-    <Compile Include="DnLiteDice.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DnLiteDice.Designer.cs">
-      <DependentUpon>DnLiteDice.cs</DependentUpon>
-    </Compile>
     <Compile Include="DnLiteDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,9 +150,6 @@
     <Compile Include="TokenData.cs" />
     <EmbeddedResource Include="DnLiteAdmin.resx">
       <DependentUpon>DnLiteAdmin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DnLiteDice.resx">
-      <DependentUpon>DnLiteDice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DnLiteDisplay.resx">
       <DependentUpon>DnLiteDisplay.cs</DependentUpon>

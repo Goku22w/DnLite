@@ -44,5 +44,14 @@ namespace DnLite
         {
             BaseColorArgb = color.ToArgb();
         }
+
+        // Create a deep copy of this TokenData instance
+        public TokenData Clone()
+        {
+            return new TokenData(Name, MaxHP, CurHP, Lvl, AC, IsPlayer, IsHostile, IsLarge, GetBaseColor())
+            {
+                InitiativeName = InitiativeName
+            };
+        }
     }
 }
