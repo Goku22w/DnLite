@@ -47,6 +47,8 @@ namespace DnLite
                 SelectedTokenRemoveButton.Click += SelectedTokenRemoveButton_Click;
             }
             catch { }
+            NPCPanel.Show();
+            DecorationPanel.Hide();
         }
 
         // Palette panel inside Admin where tokens/decoration previews live
@@ -743,6 +745,43 @@ namespace DnLite
         private void SelectedTokenChangeTokenImgButton_Click(object sender, EventArgs e)
         {
             SelectNewTokenImg();
+        }
+
+        private void ToggleNPCPanelButton_Click(object sender, EventArgs e)
+        {
+            // Toggle the visibility of the NPC/Creature panel
+            if (NPCPanel.Visible)
+            {
+                NPCPanel.Hide();
+            }
+            else
+            {
+                DecorationPanel.Hide();
+                NPCPanel.Show();
+                NPCPanel.BringToFront();
+            }
+        }
+
+        private void ToggleDecorationPanelButton_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void ToggleNPCDecoPanelButton_Click(object sender, EventArgs e)
+        {
+            // Toggle the visibility of the Panels
+            if (DecorationPanel.Visible)
+            {
+                DecorationPanel.Hide();
+                NPCPanel.Show();
+                NPCPanel.BringToFront();
+            }
+            else
+            {
+                NPCPanel.Hide();
+                DecorationPanel.Show();
+                DecorationPanel.BringToFront();
+            }
         }
     }
 }
