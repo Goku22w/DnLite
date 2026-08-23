@@ -102,6 +102,8 @@
             this.ClearPlacematFileLocationButton = new System.Windows.Forms.Button();
             this.PlacematImgFileLocation = new System.Windows.Forms.TextBox();
             this.FindPlacematImgButton = new System.Windows.Forms.Button();
+            this.PlacematTransparacyTrackBar = new System.Windows.Forms.TrackBar();
+            this.label21 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CreatureLvlNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreatureACNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreatureHPNumeric)).BeginInit();
@@ -116,6 +118,7 @@
             this.NPCPanel.SuspendLayout();
             this.DecorationPanel.SuspendLayout();
             this.PlacematGridPresetPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PlacematTransparacyTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // CreatureLvlNumeric
@@ -834,11 +837,36 @@
             this.FindPlacematImgButton.UseVisualStyleBackColor = true;
             this.FindPlacematImgButton.Click += new System.EventHandler(this.FindPlacematImgButton_Click);
             // 
+            // PlacematTransparacyTrackBar
+            // 
+            this.PlacematTransparacyTrackBar.LargeChange = 20;
+            this.PlacematTransparacyTrackBar.Location = new System.Drawing.Point(100, 462);
+            this.PlacematTransparacyTrackBar.Maximum = 100;
+            this.PlacematTransparacyTrackBar.Name = "PlacematTransparacyTrackBar";
+            this.PlacematTransparacyTrackBar.Size = new System.Drawing.Size(129, 45);
+            this.PlacematTransparacyTrackBar.SmallChange = 10;
+            this.PlacematTransparacyTrackBar.TabIndex = 64;
+            this.PlacematTransparacyTrackBar.TickFrequency = 10;
+            this.PlacematTransparacyTrackBar.Value = 30;
+            this.PlacematTransparacyTrackBar.Scroll += new System.EventHandler(this.PlacematTransparacyTrackBar_Scroll);
+            this.PlacematTransparacyTrackBar.ValueChanged += new System.EventHandler(this.PlacematTransparacyTrackBar_ValueChanged);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(97, 494);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(132, 13);
+            this.label21.TabIndex = 65;
+            this.label21.Text = "Set Placemat Transparacy";
+            // 
             // DnLiteAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(596, 507);
+            this.ClientSize = new System.Drawing.Size(596, 516);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.PlacematTransparacyTrackBar);
             this.Controls.Add(this.PlacematGridPresetPanel);
             this.Controls.Add(this.ToggleNPCDecoPanelButton);
             this.Controls.Add(this.DecorationPanel);
@@ -892,6 +920,7 @@
             this.DecorationPanel.PerformLayout();
             this.PlacematGridPresetPanel.ResumeLayout(false);
             this.PlacematGridPresetPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PlacematTransparacyTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -972,5 +1001,7 @@
         private System.Windows.Forms.Button FindPlacematImgButton;
         private System.Windows.Forms.Button LoadGridPresetButton;
         private System.Windows.Forms.Button CurrentGridtoGridPresetButton;
+        private System.Windows.Forms.TrackBar PlacematTransparacyTrackBar;
+        private System.Windows.Forms.Label label21;
     }
 }

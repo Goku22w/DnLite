@@ -24,6 +24,7 @@ namespace DnLite
         public int? LastRoll { get; private set; }
         public event Action<int> RollCompleted;
         private Image placematImage = null;
+        public float imgAlpha = 0.30f;
 
         public DnLiteDisplay()
         {
@@ -315,7 +316,7 @@ namespace DnLite
 
                     // Create a color matrix to set 25% opacity
                     System.Drawing.Imaging.ColorMatrix colorMatrix = new System.Drawing.Imaging.ColorMatrix();
-                    colorMatrix.Matrix33 = 0.35f; // Set alpha to 35%
+                    colorMatrix.Matrix33 = imgAlpha; // Set alpha to the specified value
 
                     // Create image attributes and set the color matrix
                     using (System.Drawing.Imaging.ImageAttributes imageAttributes = new System.Drawing.Imaging.ImageAttributes())
@@ -716,6 +717,11 @@ namespace DnLite
             {
                 // Ignore errors when clearing
             }
+        }
+
+        public void RefreshGridPanel()
+        {
+            gridPanel.Invalidate();
         }
     }
 }

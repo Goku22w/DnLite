@@ -1,9 +1,8 @@
 ﻿using CharacterClass;
 using DecoClass;
+using GridPreset;
 using NPCClass;
 using System;
-using TokenDataClass;
-using GridPreset;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +13,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TokenDataClass;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DnLite
 {
@@ -931,6 +932,24 @@ namespace DnLite
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load grid preset: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void PlacematTransparacyTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            display.imgAlpha = PlacematTransparacyTrackBar.Value / 100f;
+            display.RefreshGridPanel();
+        }
+
+        private void PlacematTransparacyTrackBar_Scroll(object sender, EventArgs e)
+        {
+            int step = 10;
+            int snappedValue = (int)(Math.Round((double)PlacematTransparacyTrackBar.Value / step) * step);
+
+            // Prevent infinite loops or redundant assignments
+            if (PlacematTransparacyTrackBar.Value != snappedValue)
+            {
+                PlacematTransparacyTrackBar.Value = snappedValue;
             }
         }
     }
