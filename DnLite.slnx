@@ -1,3 +1,8 @@
 <Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
+    <BuildType Name="temp" />
+  </Configurations>
   <Project Path="DnLite/DnLite.csproj" Id="1d07a242-12eb-4d0a-af50-a0d1c0648575" />
 </Solution>

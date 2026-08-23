@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace DnLite
+namespace TokenDataClass
 {
     // Simple container for token metadata editable in the admin panel
     public class TokenData

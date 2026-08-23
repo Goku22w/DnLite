@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using CharacterClass;
 using NPCClass;
 using DecoClass;
+using GridPreset;
+using TokenDataClass;
 using System.Windows.Forms;
 using System.Collections;
 
@@ -21,6 +23,7 @@ namespace DnLite
         private DodecahedronControl dodecaControl;
         public int? LastRoll { get; private set; }
         public event Action<int> RollCompleted;
+        private Image placematImage = null;
 
         public DnLiteDisplay()
         {
@@ -270,6 +273,10 @@ namespace DnLite
         private int blockWidth = 8;
         private int blockHeight = 8;
 
+        // Expose grid dimensions for external callers (e.g., admin form)
+        public int GridWidth => blockWidth;
+        public int GridHeight => blockHeight;
+
 
         public const int CellSize = 75; //Fixed pixel size for each square grid cell
 
@@ -297,6 +304,33 @@ namespace DnLite
         private void GridPanel_Paint(object sender, PaintEventArgs e) // utomatically draws the grid lines inside the panel
         {
             Graphics g = e.Graphics;
+
+            // Draw placemat image behind the grid if one is set
+            if (placematImage != null)
+            {
+                try
+                {
+                    int maxWidth = blockWidth * CellSize;
+                    int maxHeight = blockHeight * CellSize;
+
+                    // Create a color matrix to set 25% opacity
+                    System.Drawing.Imaging.ColorMatrix colorMatrix = new System.Drawing.Imaging.ColorMatrix();
+                    colorMatrix.Matrix33 = 0.35f; // Set alpha to 35%
+
+                    // Create image attributes and set the color matrix
+                    using (System.Drawing.Imaging.ImageAttributes imageAttributes = new System.Drawing.Imaging.ImageAttributes())
+                    {
+                        imageAttributes.SetColorMatrix(colorMatrix, System.Drawing.Imaging.ColorMatrixFlag.Default, System.Drawing.Imaging.ColorAdjustType.Bitmap);
+
+                        // Draw the image with transparency
+                        g.DrawImage(placematImage, new Rectangle(0, 0, maxWidth, maxHeight), 0, 0, placematImage.Width, placematImage.Height, GraphicsUnit.Pixel, imageAttributes);
+                    }
+                }
+                catch
+                {
+                    // If image fails to draw, continue with grid drawing
+                }
+            }
 
             using (Pen gridPen = new Pen(Color.Black, 2f))
             {
@@ -612,6 +646,76 @@ namespace DnLite
         private void GridEmptyButton_Click(object sender, EventArgs e)
         {
             ClearGridTokens();
+        }
+
+        // Export placed tokens with their grid coordinates as a dictionary "col,row" -> TokenData
+        public Dictionary<string, TokenData> ExportPlacedTokenData()
+        {
+            var dict = new Dictionary<string, TokenData>();
+            try
+            {
+                foreach (Control control in gridPanel.Controls)
+                {
+                    if (control is TokenControl token && token.Tag is TokenData td)
+                    {
+                        // Calculate grid cell coordinates based on token location
+                        int col = Math.Max(0, token.Left / CellSize);
+                        int row = Math.Max(0, token.Top / CellSize);
+                        string coord = $"{col},{row}";
+
+                        // Use a clone of TokenData to avoid accidental linkage
+                        dict[coord] = td.Clone();
+                    }
+                }
+            }
+            catch
+            {
+                // ignore errors and return what we have
+            }
+            return dict;
+        }
+
+        // Set the placemat background image for the grid
+        public void SetPlacematImage(string imagePath)
+        {
+            try
+            {
+                // Dispose old image if it exists
+                if (placematImage != null)
+                {
+                    placematImage.Dispose();
+                    placematImage = null;
+                }
+
+                // Load new image
+                if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
+                {
+                    placematImage = Image.FromFile(imagePath);
+                    gridPanel.Invalidate(); // Redraw the grid with the new placemat
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to set placemat image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Clear the placemat background image
+        public void ClearPlacematImage()
+        {
+            try
+            {
+                if (placematImage != null)
+                {
+                    placematImage.Dispose();
+                    placematImage = null;
+                    gridPanel.Invalidate(); // Redraw the grid without the placemat
+                }
+            }
+            catch
+            {
+                // Ignore errors when clearing
+            }
         }
     }
 }

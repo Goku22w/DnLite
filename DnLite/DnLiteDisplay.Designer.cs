@@ -17,6 +17,10 @@
             {
                 components.Dispose();
             }
+            if (disposing)
+            {
+                placematImage?.Dispose();
+            }
             base.Dispose(disposing);
         }
 

@@ -1,4 +1,5 @@
 ﻿using CharacterClass;
+using TokenDataClass;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -103,12 +104,12 @@ namespace DnLite
                     else if (cls.Contains("caster")) baseColor = Color.LightGreen;
 
                     // Calculate display color based on size
-                    Color displayColor = newCharacter.isLarge ? ControlPaint.Light(baseColor) : baseColor;
+                    Color displayColor = newCharacter.IsLarge ? ControlPaint.Light(baseColor) : baseColor;
 
-                    int gridW = newCharacter.isLarge ? 2 : 1;
-                    int gridH = newCharacter.isLarge ? 2 : 1;
+                    int gridW = newCharacter.IsLarge ? 2 : 1;
+                    int gridH = newCharacter.IsLarge ? 2 : 1;
 
-                    var td = new TokenData(newCharacter.Name ?? string.Empty, newCharacter.MaxHP, newCharacter.CurHP, newCharacter.Lvl, newCharacter.AC, isPlayer: true, isHostile: false, isLarge: newCharacter.isLarge, baseColor: baseColor);
+                    var td = new TokenData(newCharacter.Name ?? string.Empty, newCharacter.MaxHP, newCharacter.CurHP, newCharacter.Lvl, newCharacter.AC, isPlayer: true, isHostile: false, isLarge: newCharacter.IsLarge, baseColor: baseColor);
                     parentDisplay.AddPaletteTokenToAdmin(tokenChar, displayColor, td, gridW, gridH, newCharacter.ImgFileLocation ?? "");
                 }
             }

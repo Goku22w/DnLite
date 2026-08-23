@@ -2,6 +2,8 @@
 using DecoClass;
 using NPCClass;
 using System;
+using TokenDataClass;
+using GridPreset;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -195,6 +197,51 @@ namespace DnLite
                         MessageBox.Show($"Error copying image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+            }
+        }
+
+        private void CurrentGridtoGridPresetButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Gather grid info
+                int gw = display?.GridWidth ?? (int)GridRowNumeric.Value;
+                int gh = display?.GridHeight ?? (int)GridColumNumeric.Value;
+
+                // Placemat file location from the admin textbox
+                string placematPath = PlacematImgFileLocation.Text ?? string.Empty;
+
+                // Get placed tokens from display
+                Dictionary<string, TokenData> placed = new Dictionary<string, TokenData>();
+                if (display != null)
+                {
+                    placed = display.ExportPlacedTokenData();
+                }
+
+                // Create preset object
+                var preset = new GridPreset.GridPresetClass(gw, gh, placematPath, placed);
+
+                // Ask user where to save
+                using (SaveFileDialog sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "Grid Preset (*.gps)|*.gps|All files (*.*)|*.*";
+                    sfd.DefaultExt = "gps";
+                    sfd.AddExtension = true;
+                    sfd.Title = "Save Grid Preset";
+
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        string filePath = sfd.FileName;
+                        var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+                        string json = System.Text.Json.JsonSerializer.Serialize(preset, options);
+                        System.IO.File.WriteAllText(filePath, json);
+                        MessageBox.Show($"Grid preset saved to: {filePath}", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to save grid preset: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -747,21 +794,6 @@ namespace DnLite
             SelectNewTokenImg();
         }
 
-        private void ToggleNPCPanelButton_Click(object sender, EventArgs e)
-        {
-            // Toggle the visibility of the NPC/Creature panel
-            if (NPCPanel.Visible)
-            {
-                NPCPanel.Hide();
-            }
-            else
-            {
-                DecorationPanel.Hide();
-                NPCPanel.Show();
-                NPCPanel.BringToFront();
-            }
-        }
-
         private void ToggleDecorationPanelButton_Click(object sender, EventArgs e)
         {
             
@@ -781,6 +813,124 @@ namespace DnLite
                 NPCPanel.Hide();
                 DecorationPanel.Show();
                 DecorationPanel.BringToFront();
+            }
+        }
+
+        private void ClearPlacematFileLocationButton_Click(object sender, EventArgs e)
+        {
+            PlacematImgFileLocation.Clear();
+            display?.ClearPlacematImage();
+        }
+
+        private void FindPlacematImgButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+                openFileDialog.Title = "Select a Placemat Image";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        string sourceFilePath = openFileDialog.FileName;
+
+                        // Ensure Picture Folder/Placemat Folder exists
+                        string destinationDirectory = Path.Combine("Picture Folder", "Placemat Folder");
+                        if (!Directory.Exists(destinationDirectory))
+                        {
+                            Directory.CreateDirectory(destinationDirectory);
+                        }
+
+                        string fileName = Path.GetFileName(sourceFilePath);
+                        string destinationFilePath = Path.Combine(destinationDirectory, fileName);
+
+                        // Copy the selected image into the Placemat Folder (overwrite if exists)
+                        File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
+
+                        // Update UI and display using the copied image path
+                        PlacematImgFileLocation.Text = destinationFilePath;
+                        display?.SetPlacematImage(destinationFilePath);
+
+                        MessageBox.Show("Placemat image copied and loaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to load placemat image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void LoadGridPresetButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (OpenFileDialog ofd = new OpenFileDialog())
+                {
+                    ofd.Filter = "Grid Preset (*.gps)|*.gps|All files (*.*)|*.*";
+                    ofd.Title = "Load Grid Preset";
+                    if (ofd.ShowDialog() != DialogResult.OK) return;
+
+                    string json = System.IO.File.ReadAllText(ofd.FileName);
+                    var preset = System.Text.Json.JsonSerializer.Deserialize<GridPreset.GridPresetClass>(json);
+                    if (preset == null)
+                    {
+                        MessageBox.Show("Failed to deserialize grid preset.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    display?.UpdateGridDimensions(preset.GridHeight, preset.GridWidth);
+
+                    if (!string.IsNullOrEmpty(preset.PlacematFileLocation))
+                    {
+                        PlacematImgFileLocation.Text = preset.PlacematFileLocation;
+                        display?.SetPlacematImage(preset.PlacematFileLocation);
+                    }
+                    else
+                    {
+                        PlacematImgFileLocation.Clear();
+                        display?.ClearPlacematImage();
+                    }
+
+                    display?.ClearGridTokens();
+                    if (preset.TokenCoordDictionary != null && preset.TokenCoordDictionary.Count > 0)
+                    {
+                        foreach (var kv in preset.TokenCoordDictionary)
+                        {
+                            try
+                            {
+                                string coord = kv.Key;
+                                TokenData td = kv.Value;
+                                if (td == null) continue;
+
+                                var parts = coord.Split(',');
+                                if (parts.Length != 2) continue;
+                                if (!int.TryParse(parts[0], out int col)) continue;
+                                if (!int.TryParse(parts[1], out int row)) continue;
+
+                                int gw = td.IsLarge ? 2 : 1;
+                                int gh = td.IsLarge ? 2 : 1;
+                                char letter = '\0';
+                                if (!string.IsNullOrEmpty(td.Name)) letter = td.Name[0];
+                                Color fill = td.GetBaseColor();
+
+                                var newToken = display?.CreateToken(letter, fill, col, row, gw, gh, "");
+                                if (newToken != null)
+                                {
+                                    newToken.Tag = td.Clone();
+                                }
+                            }
+                            catch { }
+                        }
+                    }
+
+                    MessageBox.Show("Grid preset loaded.", "Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load grid preset: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

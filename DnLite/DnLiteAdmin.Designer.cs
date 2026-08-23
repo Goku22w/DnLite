@@ -96,6 +96,12 @@
             this.NPCPanel = new System.Windows.Forms.Panel();
             this.DecorationPanel = new System.Windows.Forms.Panel();
             this.ToggleNPCDecoPanelButton = new System.Windows.Forms.Button();
+            this.PlacematGridPresetPanel = new System.Windows.Forms.Panel();
+            this.LoadGridPresetButton = new System.Windows.Forms.Button();
+            this.CurrentGridtoGridPresetButton = new System.Windows.Forms.Button();
+            this.ClearPlacematFileLocationButton = new System.Windows.Forms.Button();
+            this.PlacematImgFileLocation = new System.Windows.Forms.TextBox();
+            this.FindPlacematImgButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CreatureLvlNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreatureACNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreatureHPNumeric)).BeginInit();
@@ -109,6 +115,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SelectedTokenACNumeric)).BeginInit();
             this.NPCPanel.SuspendLayout();
             this.DecorationPanel.SuspendLayout();
+            this.PlacematGridPresetPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // CreatureLvlNumeric
@@ -450,7 +457,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(247, 52);
+            this.label12.Location = new System.Drawing.Point(235, 52);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(86, 13);
             this.label12.TabIndex = 2;
@@ -459,7 +466,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(372, 71);
+            this.label13.Location = new System.Drawing.Point(360, 71);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(41, 13);
             this.label13.TabIndex = 36;
@@ -467,7 +474,7 @@
             // 
             // GridColumNumeric
             // 
-            this.GridColumNumeric.Location = new System.Drawing.Point(329, 69);
+            this.GridColumNumeric.Location = new System.Drawing.Point(317, 69);
             this.GridColumNumeric.Maximum = new decimal(new int[] {
             12,
             0,
@@ -485,7 +492,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(289, 71);
+            this.label14.Location = new System.Drawing.Point(277, 71);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(34, 13);
             this.label14.TabIndex = 34;
@@ -493,7 +500,7 @@
             // 
             // GridRowNumeric
             // 
-            this.GridRowNumeric.Location = new System.Drawing.Point(250, 69);
+            this.GridRowNumeric.Location = new System.Drawing.Point(238, 69);
             this.GridRowNumeric.Maximum = new decimal(new int[] {
             12,
             0,
@@ -510,7 +517,7 @@
             // 
             // SetGridButton
             // 
-            this.SetGridButton.Location = new System.Drawing.Point(250, 95);
+            this.SetGridButton.Location = new System.Drawing.Point(238, 95);
             this.SetGridButton.Name = "SetGridButton";
             this.SetGridButton.Size = new System.Drawing.Size(83, 23);
             this.SetGridButton.TabIndex = 37;
@@ -520,9 +527,9 @@
             // 
             // InitiativeClearButton
             // 
-            this.InitiativeClearButton.Location = new System.Drawing.Point(417, 463);
+            this.InitiativeClearButton.Location = new System.Drawing.Point(441, 391);
             this.InitiativeClearButton.Name = "InitiativeClearButton";
-            this.InitiativeClearButton.Size = new System.Drawing.Size(168, 21);
+            this.InitiativeClearButton.Size = new System.Drawing.Size(121, 21);
             this.InitiativeClearButton.TabIndex = 39;
             this.InitiativeClearButton.Text = "Clear Initiative";
             this.InitiativeClearButton.UseVisualStyleBackColor = true;
@@ -530,9 +537,9 @@
             // 
             // SelectedTokenViewer
             // 
-            this.SelectedTokenViewer.Location = new System.Drawing.Point(235, 336);
+            this.SelectedTokenViewer.Location = new System.Drawing.Point(242, 336);
             this.SelectedTokenViewer.Name = "SelectedTokenViewer";
-            this.SelectedTokenViewer.Size = new System.Drawing.Size(91, 86);
+            this.SelectedTokenViewer.Size = new System.Drawing.Size(76, 76);
             this.SelectedTokenViewer.TabIndex = 40;
             // 
             // label15
@@ -636,16 +643,16 @@
             this.AdminPalettePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.AdminPalettePanel.Location = new System.Drawing.Point(417, 14);
             this.AdminPalettePanel.Name = "AdminPalettePanel";
-            this.AdminPalettePanel.Size = new System.Drawing.Size(168, 408);
+            this.AdminPalettePanel.Size = new System.Drawing.Size(168, 342);
             this.AdminPalettePanel.TabIndex = 52;
             // 
             // ClearPaletteButton
             // 
-            this.ClearPaletteButton.Location = new System.Drawing.Point(417, 434);
+            this.ClearPaletteButton.Location = new System.Drawing.Point(442, 362);
             this.ClearPaletteButton.Name = "ClearPaletteButton";
-            this.ClearPaletteButton.Size = new System.Drawing.Size(168, 23);
+            this.ClearPaletteButton.Size = new System.Drawing.Size(121, 23);
             this.ClearPaletteButton.TabIndex = 53;
-            this.ClearPaletteButton.Text = "Clear Palette of Tokens";
+            this.ClearPaletteButton.Text = "Clear Token Spawner";
             this.ClearPaletteButton.UseVisualStyleBackColor = true;
             this.ClearPaletteButton.Click += new System.EventHandler(this.ClearPaletteButton_Click);
             // 
@@ -671,11 +678,11 @@
             // 
             // SelectedTokenChangeTokenImgButton
             // 
-            this.SelectedTokenChangeTokenImgButton.Location = new System.Drawing.Point(235, 428);
+            this.SelectedTokenChangeTokenImgButton.Location = new System.Drawing.Point(336, 362);
             this.SelectedTokenChangeTokenImgButton.Name = "SelectedTokenChangeTokenImgButton";
-            this.SelectedTokenChangeTokenImgButton.Size = new System.Drawing.Size(91, 60);
+            this.SelectedTokenChangeTokenImgButton.Size = new System.Drawing.Size(74, 50);
             this.SelectedTokenChangeTokenImgButton.TabIndex = 56;
-            this.SelectedTokenChangeTokenImgButton.Text = "Change Selected Tokens Image";
+            this.SelectedTokenChangeTokenImgButton.Text = "Change Token\'s Image";
             this.SelectedTokenChangeTokenImgButton.UseVisualStyleBackColor = true;
             this.SelectedTokenChangeTokenImgButton.Click += new System.EventHandler(this.SelectedTokenChangeTokenImgButton_Click);
             // 
@@ -767,11 +774,72 @@
             this.ToggleNPCDecoPanelButton.UseVisualStyleBackColor = true;
             this.ToggleNPCDecoPanelButton.Click += new System.EventHandler(this.ToggleNPCDecoPanelButton_Click);
             // 
+            // PlacematGridPresetPanel
+            // 
+            this.PlacematGridPresetPanel.Controls.Add(this.LoadGridPresetButton);
+            this.PlacematGridPresetPanel.Controls.Add(this.CurrentGridtoGridPresetButton);
+            this.PlacematGridPresetPanel.Controls.Add(this.ClearPlacematFileLocationButton);
+            this.PlacematGridPresetPanel.Controls.Add(this.PlacematImgFileLocation);
+            this.PlacematGridPresetPanel.Controls.Add(this.FindPlacematImgButton);
+            this.PlacematGridPresetPanel.Location = new System.Drawing.Point(235, 418);
+            this.PlacematGridPresetPanel.Name = "PlacematGridPresetPanel";
+            this.PlacematGridPresetPanel.Size = new System.Drawing.Size(349, 82);
+            this.PlacematGridPresetPanel.TabIndex = 63;
+            // 
+            // LoadGridPresetButton
+            // 
+            this.LoadGridPresetButton.Location = new System.Drawing.Point(263, 8);
+            this.LoadGridPresetButton.Name = "LoadGridPresetButton";
+            this.LoadGridPresetButton.Size = new System.Drawing.Size(75, 65);
+            this.LoadGridPresetButton.TabIndex = 67;
+            this.LoadGridPresetButton.Text = "Load a Grid Preset";
+            this.LoadGridPresetButton.UseVisualStyleBackColor = true;
+            this.LoadGridPresetButton.Click += new System.EventHandler(this.LoadGridPresetButton_Click);
+            // 
+            // CurrentGridtoGridPresetButton
+            // 
+            this.CurrentGridtoGridPresetButton.Location = new System.Drawing.Point(182, 8);
+            this.CurrentGridtoGridPresetButton.Name = "CurrentGridtoGridPresetButton";
+            this.CurrentGridtoGridPresetButton.Size = new System.Drawing.Size(75, 65);
+            this.CurrentGridtoGridPresetButton.TabIndex = 66;
+            this.CurrentGridtoGridPresetButton.Text = "Save Current Grid as Preset";
+            this.CurrentGridtoGridPresetButton.UseVisualStyleBackColor = true;
+            this.CurrentGridtoGridPresetButton.Click += new System.EventHandler(this.CurrentGridtoGridPresetButton_Click);
+            // 
+            // ClearPlacematFileLocationButton
+            // 
+            this.ClearPlacematFileLocationButton.Location = new System.Drawing.Point(101, 36);
+            this.ClearPlacematFileLocationButton.Name = "ClearPlacematFileLocationButton";
+            this.ClearPlacematFileLocationButton.Size = new System.Drawing.Size(74, 37);
+            this.ClearPlacematFileLocationButton.TabIndex = 65;
+            this.ClearPlacematFileLocationButton.Text = "Clear Search";
+            this.ClearPlacematFileLocationButton.UseVisualStyleBackColor = true;
+            this.ClearPlacematFileLocationButton.Click += new System.EventHandler(this.ClearPlacematFileLocationButton_Click);
+            // 
+            // PlacematImgFileLocation
+            // 
+            this.PlacematImgFileLocation.Enabled = false;
+            this.PlacematImgFileLocation.Location = new System.Drawing.Point(3, 10);
+            this.PlacematImgFileLocation.Name = "PlacematImgFileLocation";
+            this.PlacematImgFileLocation.Size = new System.Drawing.Size(173, 20);
+            this.PlacematImgFileLocation.TabIndex = 64;
+            // 
+            // FindPlacematImgButton
+            // 
+            this.FindPlacematImgButton.Location = new System.Drawing.Point(3, 36);
+            this.FindPlacematImgButton.Name = "FindPlacematImgButton";
+            this.FindPlacematImgButton.Size = new System.Drawing.Size(92, 37);
+            this.FindPlacematImgButton.TabIndex = 0;
+            this.FindPlacematImgButton.Text = "Load Placemat Image";
+            this.FindPlacematImgButton.UseVisualStyleBackColor = true;
+            this.FindPlacematImgButton.Click += new System.EventHandler(this.FindPlacematImgButton_Click);
+            // 
             // DnLiteAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(596, 496);
+            this.ClientSize = new System.Drawing.Size(596, 507);
+            this.Controls.Add(this.PlacematGridPresetPanel);
             this.Controls.Add(this.ToggleNPCDecoPanelButton);
             this.Controls.Add(this.DecorationPanel);
             this.Controls.Add(this.NPCPanel);
@@ -822,6 +890,8 @@
             this.NPCPanel.PerformLayout();
             this.DecorationPanel.ResumeLayout(false);
             this.DecorationPanel.PerformLayout();
+            this.PlacematGridPresetPanel.ResumeLayout(false);
+            this.PlacematGridPresetPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -896,5 +966,11 @@
         private System.Windows.Forms.Panel NPCPanel;
         private System.Windows.Forms.Panel DecorationPanel;
         private System.Windows.Forms.Button ToggleNPCDecoPanelButton;
+        private System.Windows.Forms.Panel PlacematGridPresetPanel;
+        private System.Windows.Forms.Button ClearPlacematFileLocationButton;
+        private System.Windows.Forms.TextBox PlacematImgFileLocation;
+        private System.Windows.Forms.Button FindPlacematImgButton;
+        private System.Windows.Forms.Button LoadGridPresetButton;
+        private System.Windows.Forms.Button CurrentGridtoGridPresetButton;
     }
 }
