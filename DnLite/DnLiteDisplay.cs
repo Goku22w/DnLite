@@ -244,7 +244,12 @@ namespace DnLite
                 {
                     if (levelModifier > 0)
                     {
-                        DiceRollOutputLabel.Text = $"{roll} +{levelModifier}";
+                        DiceRollOutputLabel.Text = $"{roll} + {levelModifier}";
+                    }
+                    else if (levelModifier < 0)
+                    {
+                        // For negative levels, show with minus sign as debuff
+                        DiceRollOutputLabel.Text = $"{roll} - {Math.Abs(levelModifier)}";
                     }
                     else
                     {

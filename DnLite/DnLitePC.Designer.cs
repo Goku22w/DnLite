@@ -190,6 +190,11 @@
             // CharacterLvlNumeric
             // 
             this.CharacterLvlNumeric.Location = new System.Drawing.Point(15, 91);
+            this.CharacterLvlNumeric.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            -2147483648});
             this.CharacterLvlNumeric.Name = "CharacterLvlNumeric";
             this.CharacterLvlNumeric.Size = new System.Drawing.Size(56, 20);
             this.CharacterLvlNumeric.TabIndex = 15;

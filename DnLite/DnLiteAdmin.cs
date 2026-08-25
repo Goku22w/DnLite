@@ -123,7 +123,7 @@ namespace DnLite
             var jsonString = JsonSerializer.Serialize(newNPC); //serializes the NPC object to a JSON string
 
             System.IO.File.WriteAllText($"Token Folder/{Name}.npc", jsonString); //writes the JSON string to a file named after the character's name
-            MessageBox.Show($"NPC {Name} saved successfully!");
+            //MessageBox.Show($"NPC {Name} saved successfully!");
         }
 
         public void LoadNPC()
@@ -142,12 +142,12 @@ namespace DnLite
                     NPCLocation = openFileDialog.FileName;
 
                     // Do something with the file path
-                    MessageBox.Show($"NPC loaded from file: {NPCLocation}");
+                    //MessageBox.Show($"NPC loaded from file: {NPCLocation}");
                 }
             }
             if (string.IsNullOrEmpty(NPCLocation))
             {
-                MessageBox.Show("No NPC file selected.");
+                //MessageBox.Show("No NPC file selected.");
                 return;
             }
             var jsonString = System.IO.File.ReadAllText(NPCLocation);
@@ -189,7 +189,7 @@ namespace DnLite
 
                         File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
 
-                        MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         DecoImageFileLocation.Text = destinationFilePath; // Update the text box with the new image file location
                     }
@@ -306,7 +306,7 @@ namespace DnLite
                         // Refresh the preview in the admin panel
                         DisplayTokenInfo(selectedToken);
 
-                        MessageBox.Show("Token image updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Token image updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
@@ -341,7 +341,7 @@ namespace DnLite
 
                         File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
 
-                        MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         CreatureImgFileLocationText.Text = destinationFilePath; // Update the text box with the new image file location
                     }
@@ -378,12 +378,12 @@ namespace DnLite
                     decoLocation = openFileDialog.FileName;
 
                     // Do something with the file path
-                    MessageBox.Show($"Deco loaded from file: {decoLocation}");
+                    //MessageBox.Show($"Deco loaded from file: {decoLocation}");
                 }
             }
             if (string.IsNullOrEmpty(decoLocation))
             {
-                MessageBox.Show("No Deco file selected.");
+                //MessageBox.Show("No Deco file selected.");
                 return;
             }
             var jsonString = System.IO.File.ReadAllText(decoLocation);
@@ -440,13 +440,13 @@ namespace DnLite
         {
             if (display == null)
             {
-                MessageBox.Show("Display not available.");
+                //MessageBox.Show("Display not available.");
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(CreatureTokenLetter.Text))
             {
-                MessageBox.Show("Please provide a token letter for the creature.");
+                //MessageBox.Show("Please provide a token letter for the creature.");
                 return;
             }
 
@@ -611,7 +611,7 @@ namespace DnLite
         {
             if (selectedToken == null)
             {
-                MessageBox.Show("No token selected to remove.", "Remove Token", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("No token selected to remove.", "Remove Token", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -646,7 +646,7 @@ namespace DnLite
             // Remove the selected token from the initiative list
             if (selectedToken == null)
             {
-                MessageBox.Show("No token selected to remove from initiative.", "Remove Initiative", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("No token selected to remove from initiative.", "Remove Initiative", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -677,11 +677,11 @@ namespace DnLite
                     td.InitiativeName = null;
                 }
 
-                MessageBox.Show($"Removed '{initiativeName}' from initiative list.", "Initiative Removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show($"Removed '{initiativeName}' from initiative list.", "Initiative Removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error removing from initiative: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show($"Error removing from initiative: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -855,7 +855,7 @@ namespace DnLite
                         PlacematImgFileLocation.Text = destinationFilePath;
                         display?.SetPlacematImage(destinationFilePath);
 
-                        MessageBox.Show("Placemat image copied and loaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Placemat image copied and loaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
@@ -954,7 +954,7 @@ namespace DnLite
                         }
                     }
 
-                    MessageBox.Show("Grid preset loaded.", "Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("Grid preset loaded.", "Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)

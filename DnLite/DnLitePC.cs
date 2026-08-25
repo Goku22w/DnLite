@@ -53,7 +53,7 @@ namespace DnLite
             var jsonString = JsonSerializer.Serialize(newCharacter); //serializes the character object to a JSON string
 
             System.IO.File.WriteAllText($"Token Folder/{Name}.char", jsonString); //writes the JSON string to a file named after the character's name
-            MessageBox.Show($"Character {Name} saved successfully!");
+            //MessageBox.Show($"Character {Name} saved successfully!");
         }
 
         public void LoadCharacter()
@@ -77,7 +77,7 @@ namespace DnLite
             }
             if(string.IsNullOrEmpty(characterLocation))
             {
-                MessageBox.Show("No character file selected.");
+                //MessageBox.Show("No character file selected.");
                 return;
             }
             var jsonString = System.IO.File.ReadAllText(characterLocation);
@@ -141,7 +141,7 @@ namespace DnLite
 
                         File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
 
-                        MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         CharacterImgFileLocationText.Text = destinationFilePath; // Update the text box with the new image file location
                     }

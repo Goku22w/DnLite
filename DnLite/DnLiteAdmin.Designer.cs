@@ -124,6 +124,11 @@
             // CreatureLvlNumeric
             // 
             this.CreatureLvlNumeric.Location = new System.Drawing.Point(71, 107);
+            this.CreatureLvlNumeric.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            -2147483648});
             this.CreatureLvlNumeric.Name = "CreatureLvlNumeric";
             this.CreatureLvlNumeric.Size = new System.Drawing.Size(56, 20);
             this.CreatureLvlNumeric.TabIndex = 42;
@@ -522,7 +527,7 @@
             // 
             this.SetGridButton.Location = new System.Drawing.Point(238, 95);
             this.SetGridButton.Name = "SetGridButton";
-            this.SetGridButton.Size = new System.Drawing.Size(83, 23);
+            this.SetGridButton.Size = new System.Drawing.Size(163, 23);
             this.SetGridButton.TabIndex = 37;
             this.SetGridButton.Text = "Set Grid Size";
             this.SetGridButton.UseVisualStyleBackColor = true;
@@ -617,6 +622,11 @@
             // SelectedTokenLvlNumeric
             // 
             this.SelectedTokenLvlNumeric.Location = new System.Drawing.Point(241, 219);
+            this.SelectedTokenLvlNumeric.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            -2147483648});
             this.SelectedTokenLvlNumeric.Name = "SelectedTokenLvlNumeric";
             this.SelectedTokenLvlNumeric.Size = new System.Drawing.Size(38, 20);
             this.SelectedTokenLvlNumeric.TabIndex = 49;
@@ -762,7 +772,7 @@
             this.DecorationPanel.Controls.Add(this.DecoWideNumeric);
             this.DecorationPanel.Controls.Add(this.label2);
             this.DecorationPanel.Controls.Add(this.label9);
-            this.DecorationPanel.Location = new System.Drawing.Point(4, 10);
+            this.DecorationPanel.Location = new System.Drawing.Point(1, 10);
             this.DecorationPanel.Name = "DecorationPanel";
             this.DecorationPanel.Size = new System.Drawing.Size(225, 383);
             this.DecorationPanel.TabIndex = 61;
@@ -865,12 +875,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 516);
+            this.Controls.Add(this.DecorationPanel);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.PlacematTransparacyTrackBar);
             this.Controls.Add(this.PlacematGridPresetPanel);
             this.Controls.Add(this.ToggleNPCDecoPanelButton);
-            this.Controls.Add(this.DecorationPanel);
-            this.Controls.Add(this.NPCPanel);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.SelectedTokenACNumeric);
             this.Controls.Add(this.SelectedTokenRemoveIntButton);
@@ -898,6 +907,7 @@
             this.Controls.Add(this.label14);
             this.Controls.Add(this.GridRowNumeric);
             this.Controls.Add(this.label12);
+            this.Controls.Add(this.NPCPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "DnLiteAdmin";
