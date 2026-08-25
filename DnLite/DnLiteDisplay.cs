@@ -655,23 +655,73 @@ namespace DnLite
             var dict = new Dictionary<string, TokenData>();
             try
             {
+                int tokenCount = 0;
+                int decoSkipped = 0;
                 foreach (Control control in gridPanel.Controls)
                 {
-                    if (control is TokenControl token && token.Tag is TokenData td)
+                    System.Diagnostics.Debug.WriteLine($"ExportPlacedTokenData: control type = {control.GetType().Name}");
+                    // MUST check DecorationControl first since it inherits from TokenControl
+                    if (control is DecorationControl)
                     {
-                        // Calculate grid cell coordinates based on token location
-                        int col = Math.Max(0, token.Left / CellSize);
-                        int row = Math.Max(0, token.Top / CellSize);
-                        string coord = $"{col},{row}";
+                        decoSkipped++;
+                        System.Diagnostics.Debug.WriteLine($"  -> Skipping DecorationControl");
+                        continue; // Skip decorations in this method
+                    }
 
-                        // Use a clone of TokenData to avoid accidental linkage
-                        dict[coord] = td.Clone();
+                    if (control is TokenControl token)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"  -> TokenControl found, Tag type = {token.Tag?.GetType().Name ?? "null"}");
+                        // Only add if it has TokenData tag
+                        if (token.Tag is TokenData td)
+                        {
+                            tokenCount++;
+                            // Calculate grid cell coordinates based on token location
+                            int col = Math.Max(0, token.Left / CellSize);
+                            int row = Math.Max(0, token.Top / CellSize);
+                            string coord = $"{col},{row}";
+
+                            // Use a clone of TokenData to avoid accidental linkage
+                            dict[coord] = td.Clone();
+                            System.Diagnostics.Debug.WriteLine($"    -> Added TokenData at {coord}");
+                        }
                     }
                 }
+                System.Diagnostics.Debug.WriteLine($"ExportPlacedTokenData: Found {tokenCount} tokens, skipped {decoSkipped} decorations");
             }
-            catch
+            catch (Exception ex)
             {
-                // ignore errors and return what we have
+                System.Diagnostics.Debug.WriteLine($"ExportPlacedTokenData error: {ex}");
+            }
+            return dict;
+        }
+
+        public Dictionary<string, TokenDataClass.DecorationData> ExportPlacedDecorationData()
+        {
+            var dict = new Dictionary<string, TokenDataClass.DecorationData>();
+            try
+            {
+                int decoCount = 0;
+                foreach (Control control in gridPanel.Controls)
+                {
+                    if (control is DecorationControl deco)
+                    {
+                        decoCount++;
+                        // Calculate grid cell coordinates based on token location
+                        int col = Math.Max(0, deco.Left / CellSize);
+                        int row = Math.Max(0, deco.Top / CellSize);
+                        string coord = $"{col},{row}";
+
+                        // Create DecorationData with current decoration properties
+                        var decoData = new TokenDataClass.DecorationData(deco.ImagePath, deco.GridWidth, deco.GridHeight);
+                        dict[coord] = decoData;
+                        System.Diagnostics.Debug.WriteLine($"ExportPlacedDecorationData: Added deco at {coord}, path={deco.ImagePath}");
+                    }
+                }
+                System.Diagnostics.Debug.WriteLine($"ExportPlacedDecorationData: Found {decoCount} decorations total");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"ExportPlacedDecorationData error: {ex}");
             }
             return dict;
         }

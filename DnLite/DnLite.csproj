@@ -123,6 +123,7 @@
     <Compile Include="DecorationControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DecorationData.cs" />
     <Compile Include="DnLiteAdmin.cs">
       <SubType>Form</SubType>
     </Compile>

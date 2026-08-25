@@ -212,15 +212,17 @@ namespace DnLite
                 // Placemat file location from the admin textbox
                 string placematPath = PlacematImgFileLocation.Text ?? string.Empty;
 
-                // Get placed tokens from display
+                // Get placed tokens and decorations from display
                 Dictionary<string, TokenData> placed = new Dictionary<string, TokenData>();
+                Dictionary<string, TokenDataClass.DecorationData> decorations = new Dictionary<string, TokenDataClass.DecorationData>();
                 if (display != null)
                 {
                     placed = display.ExportPlacedTokenData();
+                    decorations = display.ExportPlacedDecorationData();
                 }
 
-                // Create preset object
-                var preset = new GridPreset.GridPresetClass(gw, gh, placematPath, placed);
+                // Create preset object with both token types
+                var preset = new GridPreset.GridPresetClass(gw, gh, placematPath, placed, decorations);
 
                 // Ask user where to save
                 using (SaveFileDialog sfd = new SaveFileDialog())
@@ -920,6 +922,32 @@ namespace DnLite
                                 if (newToken != null)
                                 {
                                     newToken.Tag = td.Clone();
+                                }
+                            }
+                            catch { }
+                        }
+                    }
+
+                    // Load decoration tokens
+                    if (preset.DecorationCoordDictionary != null && preset.DecorationCoordDictionary.Count > 0)
+                    {
+                        foreach (var kv in preset.DecorationCoordDictionary)
+                        {
+                            try
+                            {
+                                string coord = kv.Key;
+                                TokenDataClass.DecorationData dd = kv.Value;
+                                if (dd == null) continue;
+
+                                var parts = coord.Split(',');
+                                if (parts.Length != 2) continue;
+                                if (!int.TryParse(parts[0], out int col)) continue;
+                                if (!int.TryParse(parts[1], out int row)) continue;
+
+                                var newDeco = display?.CreateDecoToken(dd.ImagePath, col, row, dd.GridWidth, dd.GridHeight);
+                                if (newDeco != null)
+                                {
+                                    newDeco.Tag = dd.Clone();
                                 }
                             }
                             catch { }
