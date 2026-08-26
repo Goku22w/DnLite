@@ -124,6 +124,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharacterClass.cs" />
+    <Compile Include="CoinControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="DecoClass.cs" />
     <Compile Include="DecorationControl.cs">
       <SubType>Component</SubType>

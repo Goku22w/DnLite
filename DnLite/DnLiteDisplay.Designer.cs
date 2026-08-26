@@ -39,6 +39,10 @@
             this.DiceRollOutputLabel = new System.Windows.Forms.Label();
             this.RollingLabel = new System.Windows.Forms.Label();
             this.RoleDieButton = new System.Windows.Forms.Button();
+            this.CoinDisplayPanel = new System.Windows.Forms.Panel();
+            this.FlippingOutputLabel = new System.Windows.Forms.Label();
+            this.FlippingLabel = new System.Windows.Forms.Label();
+            this.FlipCoinButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // gridPanel
@@ -52,19 +56,20 @@
             // InitiativeList
             // 
             this.InitiativeList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.InitiativeList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InitiativeList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InitiativeList.FormattingEnabled = true;
-            this.InitiativeList.ItemHeight = 20;
+            this.InitiativeList.ItemHeight = 16;
             this.InitiativeList.Location = new System.Drawing.Point(956, 12);
             this.InitiativeList.Name = "InitiativeList";
-            this.InitiativeList.Size = new System.Drawing.Size(217, 364);
+            this.InitiativeList.ScrollAlwaysVisible = true;
+            this.InitiativeList.Size = new System.Drawing.Size(217, 308);
             this.InitiativeList.TabIndex = 0;
             // 
             // GridEmptyButton
             // 
             this.GridEmptyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.GridEmptyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GridEmptyButton.Location = new System.Drawing.Point(956, 386);
+            this.GridEmptyButton.Location = new System.Drawing.Point(956, 326);
             this.GridEmptyButton.Name = "GridEmptyButton";
             this.GridEmptyButton.Size = new System.Drawing.Size(217, 44);
             this.GridEmptyButton.TabIndex = 3;
@@ -75,9 +80,9 @@
             // DiceDisplayPanel
             // 
             this.DiceDisplayPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DiceDisplayPanel.Location = new System.Drawing.Point(956, 436);
+            this.DiceDisplayPanel.Location = new System.Drawing.Point(974, 376);
             this.DiceDisplayPanel.Name = "DiceDisplayPanel";
-            this.DiceDisplayPanel.Size = new System.Drawing.Size(217, 211);
+            this.DiceDisplayPanel.Size = new System.Drawing.Size(180, 180);
             this.DiceDisplayPanel.TabIndex = 4;
             // 
             // DiceRollOutputLabel
@@ -85,7 +90,7 @@
             this.DiceRollOutputLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.DiceRollOutputLabel.AutoSize = true;
             this.DiceRollOutputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DiceRollOutputLabel.Location = new System.Drawing.Point(1053, 659);
+            this.DiceRollOutputLabel.Location = new System.Drawing.Point(1052, 562);
             this.DiceRollOutputLabel.Name = "DiceRollOutputLabel";
             this.DiceRollOutputLabel.Size = new System.Drawing.Size(32, 33);
             this.DiceRollOutputLabel.TabIndex = 7;
@@ -96,7 +101,7 @@
             this.RollingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RollingLabel.AutoSize = true;
             this.RollingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RollingLabel.Location = new System.Drawing.Point(953, 666);
+            this.RollingLabel.Location = new System.Drawing.Point(952, 569);
             this.RollingLabel.Name = "RollingLabel";
             this.RollingLabel.Size = new System.Drawing.Size(104, 20);
             this.RollingLabel.TabIndex = 6;
@@ -106,7 +111,7 @@
             // 
             this.RoleDieButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RoleDieButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RoleDieButton.Location = new System.Drawing.Point(956, 696);
+            this.RoleDieButton.Location = new System.Drawing.Point(955, 599);
             this.RoleDieButton.Name = "RoleDieButton";
             this.RoleDieButton.Size = new System.Drawing.Size(217, 40);
             this.RoleDieButton.TabIndex = 5;
@@ -114,12 +119,58 @@
             this.RoleDieButton.UseVisualStyleBackColor = true;
             this.RoleDieButton.Click += new System.EventHandler(this.RoleDieButton_Click);
             // 
+            // CoinDisplayPanel
+            // 
+            this.CoinDisplayPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CoinDisplayPanel.Location = new System.Drawing.Point(974, 645);
+            this.CoinDisplayPanel.Name = "CoinDisplayPanel";
+            this.CoinDisplayPanel.Size = new System.Drawing.Size(180, 180);
+            this.CoinDisplayPanel.TabIndex = 5;
+            // 
+            // FlippingOutputLabel
+            // 
+            this.FlippingOutputLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.FlippingOutputLabel.AutoSize = true;
+            this.FlippingOutputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FlippingOutputLabel.Location = new System.Drawing.Point(1050, 892);
+            this.FlippingOutputLabel.Name = "FlippingOutputLabel";
+            this.FlippingOutputLabel.Size = new System.Drawing.Size(32, 33);
+            this.FlippingOutputLabel.TabIndex = 9;
+            this.FlippingOutputLabel.Text = "0";
+            // 
+            // FlippingLabel
+            // 
+            this.FlippingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.FlippingLabel.AutoSize = true;
+            this.FlippingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FlippingLabel.Location = new System.Drawing.Point(950, 899);
+            this.FlippingLabel.Name = "FlippingLabel";
+            this.FlippingLabel.Size = new System.Drawing.Size(97, 20);
+            this.FlippingLabel.TabIndex = 8;
+            this.FlippingLabel.Text = "Ready to flip";
+            // 
+            // FlipCoinButton
+            // 
+            this.FlipCoinButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.FlipCoinButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FlipCoinButton.Location = new System.Drawing.Point(956, 831);
+            this.FlipCoinButton.Name = "FlipCoinButton";
+            this.FlipCoinButton.Size = new System.Drawing.Size(217, 40);
+            this.FlipCoinButton.TabIndex = 10;
+            this.FlipCoinButton.Text = "Flip The Coin";
+            this.FlipCoinButton.UseVisualStyleBackColor = true;
+            this.FlipCoinButton.Click += new System.EventHandler(this.FlipCoinButton_Click);
+            // 
             // DnLiteDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1185, 941);
+            this.Controls.Add(this.FlipCoinButton);
+            this.Controls.Add(this.FlippingOutputLabel);
+            this.Controls.Add(this.FlippingLabel);
+            this.Controls.Add(this.CoinDisplayPanel);
             this.Controls.Add(this.DiceRollOutputLabel);
             this.Controls.Add(this.RollingLabel);
             this.Controls.Add(this.RoleDieButton);
@@ -145,6 +196,10 @@
         private System.Windows.Forms.Label DiceRollOutputLabel;
         private System.Windows.Forms.Label RollingLabel;
         private System.Windows.Forms.Button RoleDieButton;
+        private System.Windows.Forms.Panel CoinDisplayPanel;
+        private System.Windows.Forms.Label FlippingOutputLabel;
+        private System.Windows.Forms.Label FlippingLabel;
+        private System.Windows.Forms.Button FlipCoinButton;
     }
 }
 

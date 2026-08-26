@@ -1,4 +1,10 @@
-﻿using System;
+﻿using CharacterClass;
+using CoinControl;
+using DecoClass;
+using GridPreset;
+using NPCClass;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,13 +12,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CharacterClass;
-using NPCClass;
-using DecoClass;
-using GridPreset;
-using TokenDataClass;
 using System.Windows.Forms;
-using System.Collections;
+using TokenDataClass;
 
 namespace DnLite
 {
@@ -25,6 +26,16 @@ namespace DnLite
         public event Action<int> RollCompleted;
         private Image placematImage = null;
         public float imgAlpha = 0.30f;
+        public CoinSide? LastCoinFlip { get; private set; }
+        public CoinFlipViewer coinFlipViewer;
+        private int blockWidth = 8;
+        private int blockHeight = 8;
+        public int GridWidth => blockWidth;
+        public int GridHeight => blockHeight;
+        public const int CellSize = 75;
+        private bool isDragging = false;
+        private Point dragStartMousePos;
+        private Point dragStartControlPos;
 
         public DnLiteDisplay()
         {
@@ -174,7 +185,37 @@ namespace DnLite
             pcForm.Show();
             adminForm.Show(); //Create and show the other forms on load
             this.Focus(); //Ensure the display form is focused after showing the other forms
-            DiceRollOutputLabel.Text = "0";
+            DiceRollOutputLabel.Text = "";
+            FlippingOutputLabel.Text = "";
+            // Initialize CoinFlipViewer
+            if (coinFlipViewer == null)
+            {
+                coinFlipViewer = new CoinControl.CoinFlipViewer();
+                coinFlipViewer.Dock = DockStyle.Fill;
+                CoinDisplayPanel.Controls.Add(coinFlipViewer);
+                CoinDisplayPanel.Controls.SetChildIndex(coinFlipViewer, 0);
+
+                // Subscribe to completion event
+                coinFlipViewer.FlipCompleted += CoinFlipViewer_FlipCompleted;
+
+                // Initialize coin to show as neutral gray coin ready to flip
+                coinFlipViewer.InitializeReadyState();
+            }
+            if (dodecaControl == null)
+            {
+                // Place in the DiceDisplayPanel
+                dodecaControl = new DodecahedronControl()
+                {
+                    Location = new System.Drawing.Point(0, 0),
+                    Size = new System.Drawing.Size(DiceDisplayPanel.ClientSize.Width, DiceDisplayPanel.ClientSize.Height),
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom
+                };
+                DiceDisplayPanel.Controls.Add(dodecaControl);
+                dodecaControl.BringToFront();
+
+                // Initialize dice to show as if facing forward (ready to roll)
+                dodecaControl.InitializeReadyState();
+            }
         }
 
         private void RoleDieButton_Click(object sender, EventArgs e)
@@ -185,19 +226,6 @@ namespace DnLite
             // Create dodecahedron animation control and add to DiceDisplayPanel
             try
             {
-                if (dodecaControl == null)
-                {
-                    // Place in the DiceDisplayPanel
-                    dodecaControl = new DodecahedronControl()
-                    {
-                        Location = new System.Drawing.Point(0, 0),
-                        Size = new System.Drawing.Size(DiceDisplayPanel.ClientSize.Width, DiceDisplayPanel.ClientSize.Height),
-                        Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom
-                    };
-                    DiceDisplayPanel.Controls.Add(dodecaControl);
-                    dodecaControl.BringToFront();
-                }
-
                 // ensure we don't add multiple handlers
                 dodecaControl.RollCompleted -= OnRollCompleted;
                 dodecaControl.RollCompleted += OnRollCompleted;
@@ -274,22 +302,6 @@ namespace DnLite
             }
             catch { }
         }
-
-        //Grid dimensions defined by total number of block columns and rows
-        private int blockWidth = 8;
-        private int blockHeight = 8;
-
-        // Expose grid dimensions for external callers (e.g., admin form)
-        public int GridWidth => blockWidth;
-        public int GridHeight => blockHeight;
-
-
-        public const int CellSize = 75; //Fixed pixel size for each square grid cell
-
-        //Dragging variables
-        private bool isDragging = false;
-        private Point dragStartMousePos;
-        private Point dragStartControlPos;
             
         public void UpdateGridDimensions(int newHeightInBlocks, int newWidthInBlocks) //functionality for setting the grid dynamically from the admin form
         {
@@ -777,6 +789,40 @@ namespace DnLite
         public void RefreshGridPanel()
         {
             gridPanel.Invalidate();
+        }
+
+        private void FlipCoinButton_Click(object sender, EventArgs e)
+        {
+            // Disable button during animation
+            FlipCoinButton.Enabled = false;
+            FlippingLabel.Text = "Flipping...";
+            FlippingOutputLabel.Text = "";
+
+            // Randomly choose heads or tails
+            CoinControl.CoinSide result =
+                (new Random().Next(2) == 0)
+                    ? CoinControl.CoinSide.Heads
+                    : CoinControl.CoinSide.Tails;
+
+            // Start animation with 1.2 second duration, 1.5x speed
+            coinFlipViewer.Flip(result, animationDuration: 1.2f, speedMul: 1.5f);
+        }
+
+        private void CoinFlipViewer_FlipCompleted(CoinControl.CoinSide result)
+        {
+            // Update result display
+            string resultText = result == CoinControl.CoinSide.Heads ? "HEADS" : "TAILS";
+            FlippingOutputLabel.Text = resultText;
+            FlippingOutputLabel.ForeColor =
+                result == CoinControl.CoinSide.Heads
+                    ? Color.Blue
+                    : Color.Red;
+
+            FlippingLabel.Text = "You Flipped:";
+            LastCoinFlip = result;
+
+            // Re-enable button
+            FlipCoinButton.Enabled = true;
         }
     }
 }

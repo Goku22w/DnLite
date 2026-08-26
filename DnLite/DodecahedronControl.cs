@@ -10,6 +10,9 @@ namespace DnLite
     {
         private Timer timer;
         private double angleX = 0, angleY = 0, angleZ = 0;
+        private const double PREFERRED_ANGLE_X = 1.0; // Face die forward
+        private const double PREFERRED_ANGLE_Y = 0.0; // Centered horizontally
+        private const double PREFERRED_ANGLE_Z = 0.65; // Spin die 180 degrees to show the face pointing upward
         private List<Point3D> baseVertices;
         private List<Point3D> vertices;
         private List<(int, int)> edges;
@@ -30,6 +33,26 @@ namespace DnLite
             timer = new Timer();
             timer.Interval = 16; // ~60fps
             timer.Tick += Timer_Tick;
+
+            // Initialize to show dice as if facing forward
+            InitializeReadyState();
+        }
+
+        /// <summary>
+        /// Initialize the dice to show in a neutral "ready to roll" state
+        /// Always displays the dodecahedron facing forward with the preferred orientation
+        /// </summary>
+        public void InitializeReadyState()
+        {
+            // Always use the preferred angles to ensure consistent appearance
+            angleX = PREFERRED_ANGLE_X;
+            angleY = PREFERRED_ANGLE_Y;
+            angleZ = PREFERRED_ANGLE_Z;
+            timer.Stop();
+            vertices = baseVertices.Select(v => v.Rotate(angleX, angleY, angleZ)).ToList();
+            frames = 0;
+            lastRoll = 0;
+            Invalidate(); // Trigger repaint
         }
 
         public void StartAnimation(int frames = 120, float speedMul = 1f)
@@ -39,7 +62,10 @@ namespace DnLite
             this.frames = 0;
             lastRoll = 0;
             timer.Stop();
-            angleX = angleY = angleZ = 0;
+            // Always start from the preferred orientation
+            angleX = PREFERRED_ANGLE_X;
+            angleY = PREFERRED_ANGLE_Y;
+            angleZ = PREFERRED_ANGLE_Z;
             vertices = baseVertices.Select(v => v.Rotate(angleX, angleY, angleZ)).ToList();
             timer.Start();
             Invalidate();
@@ -108,8 +134,14 @@ namespace DnLite
             if (frames >= totalFrames)
             {
                 timer.Stop();
+                // Reset to preferred orientation when animation ends
+                angleX = PREFERRED_ANGLE_X;
+                angleY = PREFERRED_ANGLE_Y;
+                angleZ = PREFERRED_ANGLE_Z;
+                vertices = baseVertices.Select(v => v.Rotate(angleX, angleY, angleZ)).ToList();
                 lastRoll = rng.Next(1, 21);
                 RollCompleted?.Invoke(lastRoll);
+                this.Invalidate();
             }
         }
 

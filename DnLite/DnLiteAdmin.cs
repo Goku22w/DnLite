@@ -681,7 +681,7 @@ namespace DnLite
             }
             catch (Exception ex)
             {
-                //MessageBox.Show($"Error removing from initiative: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error removing from initiative: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
