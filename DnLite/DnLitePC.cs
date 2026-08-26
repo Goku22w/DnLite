@@ -155,7 +155,9 @@ namespace DnLite
 
         private void SaveCharacterButton_Click(object sender, EventArgs e)
         {
-            SaveCharacter(CharacterNameText.Text, CharacterClassCombo.Text, CharacterDescRichText.Text, CharacterTokenLetter.Text[0], 3, 3, (int)CharacterLvlNumeric.Value, CharacterImgFileLocationText.Text);
+            int lvl = (int)CharacterLvlNumeric.Value;
+            // Pass HP values already including level so Character constructor does not need to add it
+            SaveCharacter(CharacterNameText.Text, CharacterClassCombo.Text, CharacterDescRichText.Text, CharacterTokenLetter.Text[0], 3 + lvl, 3 + lvl, lvl, CharacterImgFileLocationText.Text);
         }
 
         private void LoadCharacterButton_Click(object sender, EventArgs e)
@@ -189,7 +191,7 @@ namespace DnLite
             // Add this token to the admin palette via the display
             int characterLevel = (int)CharacterLvlNumeric.Value;
             int characterAC = 12 + characterLevel; // Default AC is 12 + level
-            var td = new TokenData(CharacterNameText.Text ?? string.Empty, 3 + characterLevel, 3 + characterLevel, characterLevel, characterAC, isPlayer: true, isHostile: false, isLarge: false, baseColor: baseColor);
+            TokenData td = new TokenData(CharacterNameText.Text ?? string.Empty, 3 + characterLevel, 3 + characterLevel, characterLevel, characterAC, isPlayer: true, isHostile: false, isLarge: false, baseColor: baseColor);
             parentDisplay.AddPaletteTokenToAdmin(tokenChar, baseColor, td, 1, 1, CharacterImgFileLocationText.Text);
         }
 

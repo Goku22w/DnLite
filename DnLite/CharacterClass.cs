@@ -25,12 +25,12 @@ namespace CharacterClass
             this.Class = Class;
             this.Description = Description;
             this.Token = Token;
-            this.MaxHP = MaxHP + Lvl;
-            this.CurHP = CurHP + Lvl;
+            this.MaxHP = MaxHP;
+            this.CurHP = CurHP;
             this.Lvl = Lvl;
             this.ImgFileLocation = ImgFileLocation;
             this.IsLarge = IsLarge;
-            this.AC = AC + Lvl;
+            this.AC = AC;
         }
     }
 }
