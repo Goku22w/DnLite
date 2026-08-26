@@ -55,7 +55,8 @@
     <ManifestCertificateThumbprint>9F9F6101FA8423180666BEEE944C54A4FDB8FDFB</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>DnLite_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
