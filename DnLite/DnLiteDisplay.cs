@@ -791,6 +791,36 @@ namespace DnLite
             gridPanel.Invalidate();
         }
 
+        // Ensure decoration controls are ordered above tokens.
+        // Decorations with images should be above tokens but behind decorations without images.
+        public void BringDecorationsToFront()
+        {
+            try
+            {
+                // First bring decorations that have an image to the front (so they sit above tokens)
+                foreach (Control c in gridPanel.Controls)
+                {
+                    if (c is DecorationControl deco && !string.IsNullOrEmpty(deco.ImagePath))
+                    {
+                        deco.BringToFront();
+                    }
+                }
+
+                // Then bring decorations without an image to the very front
+                foreach (Control c in gridPanel.Controls)
+                {
+                    if (c is DecorationControl deco && string.IsNullOrEmpty(deco.ImagePath))
+                    {
+                        deco.BringToFront();
+                    }
+                }
+            }
+            catch
+            {
+                // Ignore ordering errors
+            }
+        }
+
         private void FlipCoinButton_Click(object sender, EventArgs e)
         {
             // Disable button during animation

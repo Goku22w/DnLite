@@ -952,6 +952,8 @@ namespace DnLite
                             }
                             catch { }
                         }
+                        // Ensure decoration z-order so decorations sit above tokens.
+                        display?.BringDecorationsToFront();
                     }
 
                     //MessageBox.Show("Grid preset loaded.", "Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
