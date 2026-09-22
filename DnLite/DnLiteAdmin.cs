@@ -91,7 +91,15 @@ namespace DnLite
             if (AdminPalettePanel == null) return null;
             int index = AdminPalettePanel.Controls.Count;
             var token = CreatePaletteTokenInAdmin(letter, fillColor, index, gridW, gridH, imagePath);
-            if (token != null) token.Tag = data;
+            if (token != null)
+            {
+                if (data != null)
+                {
+                    // Persist the image file path into the TokenData so presets include it
+                    data.TokenImageFilePath = imagePath;
+                }
+                token.Tag = data;
+            }
             return token;
         }
 
@@ -298,6 +306,11 @@ namespace DnLite
                             // For TokenControl (Character/NPC): Update ImagePath
                             // This will render the image with a circle border
                             selectedToken.ImagePath = destinationFilePath;
+                            // If token has TokenData, persist the image path there too so presets include it
+                            if (selectedToken.Tag is TokenData td)
+                            {
+                                td.TokenImageFilePath = destinationFilePath;
+                            }
                         }
 
                         // Refresh the token display
@@ -468,7 +481,7 @@ namespace DnLite
             int lvl = (int)CreatureLvlNumeric.Value;
             int ac = (int)CreatureACNumeric.Value;
 
-            var td = new TokenData(CreatureNameText.Text ?? string.Empty, (int)CreatureHPNumeric.Value, (int)CreatureHPNumeric.Value, lvl, ac, isPlayer: false, isHostile: CreatureHostileCheck.Checked, isLarge: CreatureSizeCheck.Checked, baseColor: baseColor);
+            var td = new TokenData(CreatureNameText.Text ?? string.Empty, (int)CreatureHPNumeric.Value, (int)CreatureHPNumeric.Value, lvl, ac, isPlayer: false, isHostile: CreatureHostileCheck.Checked, isLarge: CreatureSizeCheck.Checked, baseColor: baseColor, tokenImageFilePath: CreatureImgFileLocationText.Text ?? "");
 
             // Add new palette token inside admin's palette
             CreatePaletteTokenWithDataInAdmin(tokenChar, displayColor, td, gridW, gridH, CreatureImgFileLocationText.Text);
@@ -564,7 +577,7 @@ namespace DnLite
             int ac = (int)SelectedTokenACNumeric.Value;
 
             TokenData td = selectedToken.Tag as TokenData;
-            if (td == null) td = new TokenData(name, maxHP, curHP, lvl, ac);
+            if (td == null) td = new TokenData(name, maxHP, curHP, lvl, ac, tokenImageFilePath: selectedToken.ImagePath);
             else { td.Name = name; td.MaxHP = maxHP; td.CurHP = curHP; td.Lvl = lvl; td.AC = ac; }
 
             selectedToken.Tag = td;
@@ -692,8 +705,8 @@ namespace DnLite
             TokenData td = selectedToken.Tag as TokenData;
             if (td == null)
             {
-                // Create TokenData if it doesn't exist
-                td = new TokenData(SelectedTokenNameBox.Text, (int)SelectedTokenMaxHPNumeric.Value, (int)SelectedTokenCurHPNumeric.Value, (int)SelectedTokenLvlNumeric.Value);
+                // Create TokenData if it doesn't exist; include current image path so it is preserved
+                td = new TokenData(SelectedTokenNameBox.Text, (int)SelectedTokenMaxHPNumeric.Value, (int)SelectedTokenCurHPNumeric.Value, (int)SelectedTokenLvlNumeric.Value, tokenImageFilePath: selectedToken.ImagePath);
                 selectedToken.Tag = td;
             }
 
@@ -722,8 +735,8 @@ namespace DnLite
             TokenData td = selectedToken.Tag as TokenData;
             if (td == null)
             {
-                // Create TokenData if it doesn't exist
-                td = new TokenData(SelectedTokenNameBox.Text, (int)SelectedTokenMaxHPNumeric.Value, (int)SelectedTokenCurHPNumeric.Value, (int)SelectedTokenLvlNumeric.Value);
+                // Create TokenData if it doesn't exist; include current image path so it is preserved
+                td = new TokenData(SelectedTokenNameBox.Text, (int)SelectedTokenMaxHPNumeric.Value, (int)SelectedTokenCurHPNumeric.Value, (int)SelectedTokenLvlNumeric.Value, tokenImageFilePath: selectedToken.ImagePath);
                 selectedToken.Tag = td;
             }
 
@@ -918,7 +931,7 @@ namespace DnLite
                                 if (!string.IsNullOrEmpty(td.Name)) letter = td.Name[0];
                                 Color fill = td.GetBaseColor();
 
-                                var newToken = display?.CreateToken(letter, fill, col, row, gw, gh, "");
+                                var newToken = display?.CreateToken(letter, fill, col, row, gw, gh, td?.TokenImageFilePath ?? "");
                                 if (newToken != null)
                                 {
                                     newToken.Tag = td.Clone();

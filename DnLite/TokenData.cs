@@ -20,8 +20,10 @@ namespace TokenDataClass
         // Store the base color (not affected by size/hostility modifiers) as ARGB int for JSON serialization
         public int BaseColorArgb { get; set; }
 
+        public string TokenImageFilePath { get; set; } // Optional: Path to the token image file
+
         public TokenData() { }
-        public TokenData(string name, int maxHP, int curHP, int lvl = 0, int ac = 10, bool isPlayer = false, bool isHostile = false, bool isLarge = false, Color? baseColor = null)
+        public TokenData(string name, int maxHP, int curHP, int lvl = 0, int ac = 10, bool isPlayer = false, bool isHostile = false, bool isLarge = false, Color? baseColor = null, string tokenImageFilePath = null)
         {
             Name = name;
             MaxHP = maxHP;
@@ -32,6 +34,8 @@ namespace TokenDataClass
             IsHostile = isHostile;
             IsLarge = isLarge;
             BaseColorArgb = baseColor.HasValue ? baseColor.Value.ToArgb() : Color.Gray.ToArgb();
+            TokenImageFilePath = tokenImageFilePath;
+
         }
 
         // Helper property to get/set BaseColor as a Color object
@@ -48,7 +52,7 @@ namespace TokenDataClass
         // Create a deep copy of this TokenData instance
         public TokenData Clone()
         {
-            return new TokenData(Name, MaxHP, CurHP, Lvl, AC, IsPlayer, IsHostile, IsLarge, GetBaseColor())
+            return new TokenData(Name, MaxHP, CurHP, Lvl, AC, IsPlayer, IsHostile, IsLarge, GetBaseColor(), TokenImageFilePath)
             {
                 InitiativeName = InitiativeName
             };
