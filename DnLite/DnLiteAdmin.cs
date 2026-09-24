@@ -29,6 +29,34 @@ namespace DnLite
             this.display = display ?? throw new ArgumentNullException(nameof(display));
         }
 
+        // Helper: copy image into destination directory unless it's already inside it.
+        private string GetOrCopyImagePath(string sourceFilePath, string destinationDirectory)
+        {
+            if (string.IsNullOrWhiteSpace(sourceFilePath)) throw new ArgumentNullException(nameof(sourceFilePath));
+            if (string.IsNullOrWhiteSpace(destinationDirectory)) throw new ArgumentNullException(nameof(destinationDirectory));
+
+            string sourceFull = Path.GetFullPath(sourceFilePath);
+            string destDirFull = Path.GetFullPath(destinationDirectory).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+
+            if (!Directory.Exists(destDirFull)) Directory.CreateDirectory(destDirFull);
+
+            string fileName = Path.GetFileName(sourceFull);
+            string destinationFilePath = Path.Combine(destDirFull, fileName);
+            string destinationFull = Path.GetFullPath(destinationFilePath);
+
+            // If source file already is the same file as destination or already inside destination folder, reuse it
+            if (string.Equals(sourceFull, destinationFull, StringComparison.OrdinalIgnoreCase)
+                || sourceFull.StartsWith(destDirFull + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(sourceFull, destDirFull, StringComparison.OrdinalIgnoreCase))
+            {
+                return sourceFull;
+            }
+
+            // Otherwise copy into destination folder (overwrite if exists)
+            File.Copy(sourceFull, destinationFull, overwrite: true);
+            return destinationFull;
+        }
+
         protected override CreateParams CreateParams
         {
             get
@@ -183,21 +211,10 @@ namespace DnLite
                 {
                     try
                     {
+                        string sourceFilePath = openFileDialog.FileName;
                         string destinationDirectory = @"Picture Folder/";
 
-                        if (!Directory.Exists(destinationDirectory))
-                        {
-                            Directory.CreateDirectory(destinationDirectory);
-                        }
-
-                        string sourceFilePath = openFileDialog.FileName;
-                        string fileName = Path.GetFileName(sourceFilePath);
-
-                        string destinationFilePath = Path.Combine(destinationDirectory, fileName);
-
-                        File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
-
-                        //MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        string destinationFilePath = GetOrCopyImagePath(sourceFilePath, destinationDirectory);
 
                         DecoImageFileLocation.Text = destinationFilePath; // Update the text box with the new image file location
                     }
@@ -274,19 +291,11 @@ namespace DnLite
                 {
                     try
                     {
+                        string sourceFilePath = openFileDialog.FileName;
                         string destinationDirectory = @"Picture Folder/";
 
-                        if (!Directory.Exists(destinationDirectory))
-                        {
-                            Directory.CreateDirectory(destinationDirectory);
-                        }
-
-                        string sourceFilePath = openFileDialog.FileName;
-                        string fileName = Path.GetFileName(sourceFilePath);
-                        string destinationFilePath = Path.Combine(destinationDirectory, fileName);
-
-                        // Copy the image to the Picture Folder
-                        File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
+                        // Copy the image to the Picture Folder (or reuse if already inside)
+                        string destinationFilePath = GetOrCopyImagePath(sourceFilePath, destinationDirectory);
 
                         // Check if the selected token is a DecorationControl (decoration) or TokenControl (character/NPC)
                         if (selectedToken is DecorationControl decoControl)
@@ -340,21 +349,10 @@ namespace DnLite
                 {
                     try
                     {
+                        string sourceFilePath = openFileDialog.FileName;
                         string destinationDirectory = @"Picture Folder/";
 
-                        if (!Directory.Exists(destinationDirectory))
-                        {
-                            Directory.CreateDirectory(destinationDirectory);
-                        }
-
-                        string sourceFilePath = openFileDialog.FileName;
-                        string fileName = Path.GetFileName(sourceFilePath);
-
-                        string destinationFilePath = Path.Combine(destinationDirectory, fileName);
-
-                        File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
-
-                        //MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        string destinationFilePath = GetOrCopyImagePath(sourceFilePath, destinationDirectory);
 
                         CreatureImgFileLocationText.Text = destinationFilePath; // Update the text box with the new image file location
                     }
@@ -851,20 +849,11 @@ namespace DnLite
                     {
                         string sourceFilePath = openFileDialog.FileName;
 
-                        // Ensure Picture Folder/Placemat Folder exists
+                        // Ensure Picture Folder/Placemat Folder exists and copy or reuse image
                         string destinationDirectory = Path.Combine("Picture Folder", "Placemat Folder");
-                        if (!Directory.Exists(destinationDirectory))
-                        {
-                            Directory.CreateDirectory(destinationDirectory);
-                        }
+                        string destinationFilePath = GetOrCopyImagePath(sourceFilePath, destinationDirectory);
 
-                        string fileName = Path.GetFileName(sourceFilePath);
-                        string destinationFilePath = Path.Combine(destinationDirectory, fileName);
-
-                        // Copy the selected image into the Placemat Folder (overwrite if exists)
-                        File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
-
-                        // Update UI and display using the copied image path
+                        // Update UI and display using the resolved image path
                         PlacematImgFileLocation.Text = destinationFilePath;
                         display?.SetPlacematImage(destinationFilePath);
 

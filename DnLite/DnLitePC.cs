@@ -42,6 +42,32 @@ namespace DnLite
             }
         }
 
+        // Helper: copy image into destination directory unless it's already inside it.
+        private string GetOrCopyImagePath(string sourceFilePath, string destinationDirectory)
+        {
+            if (string.IsNullOrWhiteSpace(sourceFilePath)) throw new ArgumentNullException(nameof(sourceFilePath));
+            if (string.IsNullOrWhiteSpace(destinationDirectory)) throw new ArgumentNullException(nameof(destinationDirectory));
+
+            string sourceFull = Path.GetFullPath(sourceFilePath);
+            string destDirFull = Path.GetFullPath(destinationDirectory).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+
+            if (!Directory.Exists(destDirFull)) Directory.CreateDirectory(destDirFull);
+
+            string fileName = Path.GetFileName(sourceFull);
+            string destinationFilePath = Path.Combine(destDirFull, fileName);
+            string destinationFull = Path.GetFullPath(destinationFilePath);
+
+            if (string.Equals(sourceFull, destinationFull, StringComparison.OrdinalIgnoreCase)
+                || sourceFull.StartsWith(destDirFull + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(sourceFull, destDirFull, StringComparison.OrdinalIgnoreCase))
+            {
+                return sourceFull;
+            }
+
+            File.Copy(sourceFull, destinationFull, overwrite: true);
+            return destinationFull;
+        }
+
         private void DnLitePC_Load(object sender, EventArgs e)
         {
 
@@ -127,21 +153,10 @@ namespace DnLite
                 {
                     try
                     {
+                        string sourceFilePath = openFileDialog.FileName;
                         string destinationDirectory = @"Picture Folder/";
 
-                        if (!Directory.Exists(destinationDirectory))
-                        {
-                            Directory.CreateDirectory(destinationDirectory);
-                        }
-
-                        string sourceFilePath = openFileDialog.FileName;
-                        string fileName = Path.GetFileName(sourceFilePath);
-
-                        string destinationFilePath = Path.Combine(destinationDirectory, fileName);
-
-                        File.Copy(sourceFilePath, destinationFilePath, overwrite: true);
-
-                        //MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        string destinationFilePath = GetOrCopyImagePath(sourceFilePath, destinationDirectory);
 
                         CharacterImgFileLocationText.Text = destinationFilePath; // Update the text box with the new image file location
                     }
